@@ -1,5 +1,6 @@
-import org.gradle.internal.impldep.org.hamcrest.CoreMatchers;
-import org.gradle.internal.impldep.org.junit.Assert;
+import org.hamcrest.CoreMatchers;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.otus.spring.dao.StudentDao;
@@ -33,16 +34,17 @@ public class StudentDaoTest {
 
     @Test
     public void checkIfStringContainsQuestions() {
-        Assert.assertThat(studentDao.getQuestions(), CoreMatchers.containsString("Вопросы"));
+        System.out.println(studentDao.getQuestions());
+        assertThat(studentDao.getQuestions(), CoreMatchers.containsString("Вопросы"));
     }
 
     @Test
     public void checkStringContainsNeedQuestions() {
         String questions = studentDao.getQuestions();
-        Assert.assertThat(questions, CoreMatchers.containsString("Какой сейчас год"));
-        Assert.assertThat(questions, CoreMatchers.containsString("Формула дискриминанта"));
-        Assert.assertThat(questions, CoreMatchers.containsString("Напишите столицу Австралии"));
-        Assert.assertThat(questions, CoreMatchers.containsString("Напишите формулу определения Sin x"));
-        Assert.assertThat(questions, CoreMatchers.containsString("Напишите формулу определения Cos x"));
+        assertThat(questions, CoreMatchers.containsString("Какой сейчас год"));
+        assertThat(questions, CoreMatchers.containsString("Формула дискриминанта"));
+        assertThat(questions, CoreMatchers.containsString("Напишите столицу Австралии"));
+        assertThat(questions, CoreMatchers.containsString("Напишите формулу определения Sin x"));
+        assertThat(questions, CoreMatchers.containsString("Напишите формулу определения Cos x"));
     }
 }
