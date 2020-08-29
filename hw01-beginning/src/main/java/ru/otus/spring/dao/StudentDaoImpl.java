@@ -1,8 +1,8 @@
 package ru.otus.spring.dao;
 
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import java.io.InputStream;
  */
 public class StudentDaoImpl implements StudentDao {
     private String fileName;
-//    private static Logger logger = LoggerFactory.getLogger(Main.class);
+    private static Logger logger = LoggerFactory.getLogger(StudentDaoImpl.class);
 
     private final ClassLoader classLoader = getClass().getClassLoader();
 
@@ -21,8 +21,7 @@ public class StudentDaoImpl implements StudentDao {
         try (InputStream stream = classLoader.getResourceAsStream(fileName)) {
             content = new String(stream.readAllBytes());
         } catch (IOException e) {
-//            logger.error(e.getMessage());
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         return content;
     }
