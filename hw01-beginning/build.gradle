@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'java-library'
     id 'idea'
+    id 'com.github.johnrengelman.shadow'
 }
 
 idea {
@@ -43,3 +44,14 @@ task run(type: JavaExec, dependsOn: classes) {
     main = 'ru.otus.Main'
     classpath sourceSets.main.runtimeClasspath
 }
+
+shadowJar {
+    archiveBaseName.set('hw01_beginning')
+    archiveVersion.set('0.1')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.Main'
+    }
+}
+
+tasks.build.dependsOn tasks.shadowJar
