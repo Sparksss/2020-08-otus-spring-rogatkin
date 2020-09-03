@@ -36,8 +36,13 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<String> getQuestions() {
         String content = this.readFile();
+        List<String> questions = new ArrayList<>();
         content = content.replaceAll("(,.+\n)", "\n");
-        return Arrays.asList(content.split("\n"));
+        String[] str = content.split("\n");
+        for(int i = 1; i < str.length; i++) {
+            questions.add(str[i]);
+        }
+        return questions;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void registerStudent(String firstName, String lastName) {
-        new Student(firstName, lastName);
+    public Student save(String firstName, String lastName) {
+        return new Student(firstName, lastName);
     }
 }
