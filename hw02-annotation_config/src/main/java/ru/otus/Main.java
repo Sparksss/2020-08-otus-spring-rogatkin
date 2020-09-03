@@ -10,10 +10,9 @@ import ru.otus.services.StudentServiceImpl;
  */
 @ComponentScan
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         StudentService studentService = context.getBean(StudentServiceImpl.class);
-        studentService.greeting();
-        studentService.testing();
+        System.out.println("Количество правильных ответов: " + studentService.testing());
     }
 }
