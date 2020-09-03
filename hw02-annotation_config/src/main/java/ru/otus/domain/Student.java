@@ -7,6 +7,7 @@ public class Student {
 
     private String firstName;
     private String lastName;
+    private int points;
 
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
@@ -27,5 +28,13 @@ public class Student {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }
