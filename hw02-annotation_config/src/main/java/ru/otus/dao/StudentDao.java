@@ -8,5 +8,6 @@ import java.util.List;
  */
 public interface StudentDao {
     List<String> getQuestions();
+    List<String> getRightAnswers();
     void registerStudent(String firstName, String lastName);
 }

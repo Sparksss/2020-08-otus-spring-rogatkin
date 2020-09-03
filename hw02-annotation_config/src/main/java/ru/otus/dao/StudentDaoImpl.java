@@ -8,6 +8,7 @@ import ru.otus.domain.Student;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,8 +36,19 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<String> getQuestions() {
         String content = this.readFile();
-        content = content.replaceAll(",.+\n", "\n");
+        content = content.replaceAll("(,.+\n)", "\n");
         return Arrays.asList(content.split("\n"));
+    }
+
+    @Override
+    public List<String> getRightAnswers() {
+        String content = this.readFile();
+        String[] str = content.split(",|\n");
+        List<String> answers = new ArrayList<>();
+        for(int i = 4; i < str.length; i += 3) {
+            answers.add(str[i]);
+        }
+        return answers;
     }
 
     @Override
