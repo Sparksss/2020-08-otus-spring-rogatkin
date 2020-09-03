@@ -4,5 +4,5 @@ package ru.otus.services;
  * Created by ilya on Sep, 2020
  */
 public interface StudentService {
-    int testing() throws Exception;
+    void testing() throws Exception;
 }
