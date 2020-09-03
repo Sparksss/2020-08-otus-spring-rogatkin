@@ -13,6 +13,6 @@ public class Main {
     public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Main.class);
         StudentService studentService = context.getBean(StudentServiceImpl.class);
-        System.out.println("Количество правильных ответов: " + studentService.testing());
+        studentService.testing();
     }
 }
