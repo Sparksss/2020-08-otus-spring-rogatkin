@@ -1,6 +1,8 @@
 package ru.otus.dao;
 
 
+import ru.otus.domain.Student;
+
 import java.util.List;
 
 /**
@@ -9,5 +11,5 @@ import java.util.List;
 public interface StudentDao {
     List<String> getQuestions();
     List<String> getRightAnswers();
-    void registerStudent(String firstName, String lastName);
+    Student save(String firstName, String lastName);
 }
