@@ -1,5 +1,7 @@
 package ru.otus.services;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,11 +15,13 @@ import ru.otus.domain.Student;
 /**
  * Created by ilya on Sep, 2020
  */
+@PropertySource("classpath:application.properties")
 @Service
 public class StudentServiceImpl implements StudentService {
 
+    @Value("${student.grade}")
+    private int GRADE;
     private final StudentDao dao;
-    private final int GRADE = 3;
 
     public StudentServiceImpl(StudentDao studentDaoImpl) {
         this.dao = studentDaoImpl;
@@ -49,6 +53,16 @@ public class StudentServiceImpl implements StudentService {
         return points;
     }
 
+    private void showResultMessage(Student student) {
+        System.out.println("Student name: " + student.getLastName() + ", " + student.getFirstName());
+        System.out.println("Right answers: " + student.getCountRightAnswers());
+        if(student.getCountRightAnswers() >= GRADE) {
+            System.out.println("Congratulations, student is passed");
+        } else {
+            System.out.println("Unfortunately, the required number of points has not been reached");
+        }
+    }
+
     @Override
     public void testing() throws Exception {
         Student student = greeting();
@@ -59,7 +73,6 @@ public class StudentServiceImpl implements StudentService {
         List<String> questions = dao.getQuestions();
         List<String> studentAnswers = new ArrayList<>();
         StringBuilder answer = new StringBuilder();
-        String showResultMessage = null;
 
         for(String s : questions) {
             System.out.print(s + ": ");
@@ -74,17 +87,9 @@ public class StudentServiceImpl implements StudentService {
             }
         }
 
-        student.setPoints(calculateRightAnswers(dao.getRightAnswers(), studentAnswers));
-        System.out.println("Student name: " + student.getLastName() + ", " + student.getFirstName());
-        System.out.println("Right answers: " + student.getPoints());
+        student.setCountRightAnswers(calculateRightAnswers(dao.getRightAnswers(), studentAnswers));
+        showResultMessage(student);
 
-        if(student.getPoints() >= GRADE) {
-            showResultMessage = "Congratulations, student is passed";
-        } else {
-            showResultMessage = "Unfortunately, the required number of points has not been reached";
-        }
-
-        System.out.println(showResultMessage);
     }
 
 }
