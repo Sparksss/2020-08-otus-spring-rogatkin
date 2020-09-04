@@ -7,7 +7,7 @@ public class Student {
 
     private String firstName;
     private String lastName;
-    private int points;
+    private int countRightAnswers;
 
     public Student(String firstName, String lastName) {
         this.firstName = firstName;
@@ -30,11 +30,11 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public int getPoints() {
-        return points;
+    public int getCountRightAnswers() {
+        return countRightAnswers;
     }
 
-    public void setPoints(int points) {
-        this.points = points;
+    public void setCountRightAnswers(int countRightAnswers) {
+        this.countRightAnswers = countRightAnswers;
     }
 }
