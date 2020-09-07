@@ -1,11 +1,9 @@
 package ru.otus.dao;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.domain.Student;
+import ru.otus.services.IOService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,17 +15,16 @@ import java.util.List;
 @Repository
 public class StudentDaoImpl implements StudentDao {
 
-    private static Logger logger = LoggerFactory.getLogger(StudentDaoImpl.class);
-
-    private final String content;
+    private final IOService ioService;
 
     @Autowired
-    public StudentDaoImpl(String content) {
-        this.content = content;
+    public StudentDaoImpl(IOService ioService) {
+        this.ioService = ioService;
     }
 
     @Override
     public List<String> getQuestions() {
+        String content = ioService.readFile();
         List<String> questions = new ArrayList<>();
         String[] str = content.split("\n");
 
@@ -39,6 +36,7 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public List<String> getRightAnswers() {
+        String content = ioService.readFile();
         String[] str = content.split(",|\n");
         List<String> answers = new ArrayList<>();
         for(int i = 4; i < str.length; i += 3) {
