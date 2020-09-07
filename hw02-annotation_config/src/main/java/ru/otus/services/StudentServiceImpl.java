@@ -27,6 +27,35 @@ public class StudentServiceImpl implements StudentService {
         this.dao = studentDaoImpl;
     }
 
+    @Override
+    public void testing() throws Exception {
+        Student student = greeting();
+
+        if(student == null) throw new Exception("Error create new profile student!");
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        List<String> questions = dao.getQuestions();
+        List<String> studentAnswers = new ArrayList<>();
+        StringBuilder answer = new StringBuilder();
+
+        for(String s : questions) {
+            System.out.print(s + ": ");
+            try {
+                answer.append(reader.readLine());
+                if(answer.length() > 1) {
+                    studentAnswers.add(answer.toString());
+                }
+                answer.setLength(0);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        student.setCountRightAnswers(calculateRightAnswers(dao.getRightAnswers(), studentAnswers));
+        showResultMessage(student);
+
+    }
+
     private Student greeting() {
         System.out.println("Welcome!");
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -61,35 +90,6 @@ public class StudentServiceImpl implements StudentService {
         } else {
             System.out.println("Unfortunately, the required number of points has not been reached");
         }
-    }
-
-    @Override
-    public void testing() throws Exception {
-        Student student = greeting();
-
-        if(student == null) throw new Exception("Error create new profile student!");
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        List<String> questions = dao.getQuestions();
-        List<String> studentAnswers = new ArrayList<>();
-        StringBuilder answer = new StringBuilder();
-
-        for(String s : questions) {
-            System.out.print(s + ": ");
-            try {
-                answer.append(reader.readLine());
-                if(answer.length() > 1) {
-                    studentAnswers.add(answer.toString());
-                }
-                answer.setLength(0);
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        student.setCountRightAnswers(calculateRightAnswers(dao.getRightAnswers(), studentAnswers));
-        showResultMessage(student);
-
     }
 
 }
