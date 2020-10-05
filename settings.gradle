@@ -1,4 +1,5 @@
 rootProject.name = 'otus-spring'
 include 'hw01-beginning'
 include 'hw02-annotation_config'
+include 'hw03-spring-boot'
 
