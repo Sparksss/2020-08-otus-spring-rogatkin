@@ -1,0 +1,6 @@
+server:
+  port: 8080
+student:
+  grade: 3
+questions:
+  filename: questions.csv
