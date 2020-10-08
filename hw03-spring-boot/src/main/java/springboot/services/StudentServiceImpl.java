@@ -1,6 +1,8 @@
 package springboot.services;
 
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import springboot.config.LocaleConfig;
 import springboot.config.StudentConfig;
 import springboot.dao.StudentDao;
 import springboot.domain.Student;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by ilya on Sep, 2020
@@ -19,10 +22,14 @@ public class StudentServiceImpl implements StudentService {
 
     private final int GRADE;
     private final StudentDao dao;
+    private final MessageSource messageSource;
+    private final Locale locale;
 
-    public StudentServiceImpl(StudentDao studentDaoImpl, StudentConfig studentConfig) {
+    public StudentServiceImpl(StudentDao studentDaoImpl, StudentConfig studentConfig, MessageSource messageSource, LocaleConfig localeConfig) {
         this.GRADE = studentConfig.getGrade();
         this.dao = studentDaoImpl;
+        this.messageSource = messageSource;
+        this.locale = localeConfig.getLocale();
     }
 
     @Override
@@ -36,8 +43,8 @@ public class StudentServiceImpl implements StudentService {
         List<String> studentAnswers = new ArrayList<>();
         StringBuilder answer = new StringBuilder();
 
-        for(String s : questions) {
-            System.out.print(s + ": ");
+        for(String question : questions) {
+            System.out.print(question);
             try {
                 answer.append(reader.readLine());
                 if(answer.length() > 1) {
@@ -55,13 +62,13 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private Student greeting() {
-        System.out.println("Welcome!");
+        System.out.println(messageSource.getMessage("message.user.greeting",new String[]{": "} , locale));
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Student student = null;
         try {
-            System.out.print("Please add your first name?: ");
+            System.out.print(messageSource.getMessage("message.user.enterName",new String[]{": "} , locale));
             String firstName = reader.readLine();
-            System.out.print("Please add your last name?: ");
+            System.out.print(messageSource.getMessage("message.user.lastName",new String[]{": "} , locale));
             String lastName = reader.readLine();
             student = dao.save(firstName, lastName);
         } catch (IOException e) {
@@ -81,12 +88,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private void showResultMessage(Student student) {
-        System.out.println("Student name: " + student.getLastName() + ", " + student.getFirstName());
-        System.out.println("Right answers: " + student.getCountRightAnswers());
-        if(student.getCountRightAnswers() >= GRADE) {
-            System.out.println("Congratulations, student is passed");
+        System.out.println(messageSource.getMessage("message.user.name", new String[]{student.getLastName() + ", " + student.getFirstName()}, locale));
+        System.out.println(messageSource.getMessage("message.rightAnswers.count", new String[]{Integer.toString(student.getCountRightAnswers())}, locale));
+        if( student.getCountRightAnswers() >= GRADE) {
+            System.out.println(messageSource.getMessage("message.congratulations", new String[]{":"}, locale));
         } else {
-            System.out.println("Unfortunately, the required number of points has not been reached");
+            System.out.println(messageSource.getMessage("message.lose", new String[]{":"}, locale));
         }
     }
 
