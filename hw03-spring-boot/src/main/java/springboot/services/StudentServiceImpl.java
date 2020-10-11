@@ -24,12 +24,14 @@ public class StudentServiceImpl implements StudentService {
     private final StudentDao dao;
     private final MessageSource messageSource;
     private final Locale locale;
+    private final IOService ioService;
 
-    public StudentServiceImpl(StudentDao studentDaoImpl, StudentConfig studentConfig, MessageSource messageSource, LocaleConfig localeConfig) {
+    public StudentServiceImpl(StudentDao studentDaoImpl, StudentConfig studentConfig, MessageSource messageSource, LocaleConfig localeConfig, IOService ioService) {
         this.GRADE = studentConfig.getGrade();
         this.dao = studentDaoImpl;
         this.messageSource = messageSource;
         this.locale = localeConfig.getLocale();
+        this.ioService = ioService;
     }
 
     @Override
@@ -38,7 +40,6 @@ public class StudentServiceImpl implements StudentService {
 
         if(student == null) throw new Exception("Error create new profile student!");
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         List<String> questions = dao.getQuestions();
         List<String> studentAnswers = new ArrayList<>();
         StringBuilder answer = new StringBuilder();
@@ -46,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
         for(String question : questions) {
             System.out.print(question);
             try {
-                answer.append(reader.readLine());
+                answer.append(this.ioService.readString());
                 if(answer.length() > 1) {
                     studentAnswers.add(answer.toString());
                 }
@@ -63,13 +64,12 @@ public class StudentServiceImpl implements StudentService {
 
     private Student greeting() {
         System.out.println(messageSource.getMessage("message.user.greeting",new String[]{": "} , locale));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Student student = null;
         try {
             System.out.print(messageSource.getMessage("message.user.enterName",new String[]{": "} , locale));
-            String firstName = reader.readLine();
+            String firstName = ioService.readString();
             System.out.print(messageSource.getMessage("message.user.lastName",new String[]{": "} , locale));
-            String lastName = reader.readLine();
+            String lastName = ioService.readString();
             student = dao.save(firstName, lastName);
         } catch (IOException e) {
             System.out.println(e.getMessage());
