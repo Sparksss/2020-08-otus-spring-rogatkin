@@ -1,0 +1,8 @@
+server:
+  port: 8080
+student:
+  grade: 3
+application:
+  locale: ru_RU
+questions:
+  filename: questions.csv
