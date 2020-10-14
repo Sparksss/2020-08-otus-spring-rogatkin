@@ -1,5 +1,7 @@
 package ru.otus.domains;
 
+import java.util.List;
+
 /**
  * Created by ilya on Oct, 2020
  */
@@ -7,14 +9,24 @@ public class Book {
     private long id;
     private String name;
     private Genre genre;
-    private Author author;
+    private List<Author> authors;
 
     public Book() {
+    }
+
+    public Book(String name) {
+        this.name = name;
     }
 
     public Book(long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Book(long id, String name, Genre genre) {
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
     }
 
     public long getId() {
@@ -29,8 +41,8 @@ public class Book {
         return genre;
     }
 
-    public Author getAuthor() {
-        return author;
+    public List<Author> getAuthors() {
+        return authors;
     }
 
     public void setId(long id) {
@@ -45,7 +57,7 @@ public class Book {
         this.genre = genre;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
     }
 }
