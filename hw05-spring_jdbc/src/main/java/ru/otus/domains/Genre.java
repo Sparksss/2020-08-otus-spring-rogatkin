@@ -4,18 +4,18 @@ package ru.otus.domains;
  * Created by ilya on Oct, 2020
  */
 public class Genre {
-    private short id;
+    private long id;
     private String name;
 
     public Genre() {
     }
 
-    public Genre(short id, String name) {
+    public Genre(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public short getId() {
+    public long getId() {
         return id;
     }
 
