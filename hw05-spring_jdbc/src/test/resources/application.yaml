@@ -1,0 +1,9 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: test
+    password: 12345
+    schema: scheme.sql
+    data: test-data.sql
