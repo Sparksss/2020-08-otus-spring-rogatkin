@@ -13,5 +13,6 @@ public interface GenreDaoJdbc {
     Genre getByName(String name);
     void insert(Genre genre);
     void update(Genre genre);
+    void delete(Genre genre);
     List<Genre> getAll();
 }

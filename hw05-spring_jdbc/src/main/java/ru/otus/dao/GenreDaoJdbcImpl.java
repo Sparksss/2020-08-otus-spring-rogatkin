@@ -8,6 +8,7 @@ import ru.otus.domains.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class GenreDaoJdbcImpl implements GenreDaoJdbc {
     }
 
     @Autowired
-    public GenreDaoJdbcImpl(NamedParameterJdbcOperations jdbc) {
-        this.jdbc = jdbc;
+    public GenreDaoJdbcImpl(NamedParameterJdbcOperations namedParameterJdbcOperations) {
+        this.jdbc = namedParameterJdbcOperations;
     }
 
 
@@ -45,7 +46,10 @@ public class GenreDaoJdbcImpl implements GenreDaoJdbc {
 
     @Override
     public void update(Genre genre) {
-        jdbc.update("update genres set name = :name", Map.of("name", genre.getName()));
+        HashMap<String, Object> values = new HashMap<>();
+        values.put("name", genre.getName());
+        values.put("id", genre.getId());
+        jdbc.update("update genres set name = :name where id = :id", values);
     }
 
     @Override
@@ -56,6 +60,11 @@ public class GenreDaoJdbcImpl implements GenreDaoJdbc {
     @Override
     public Genre getByName(String name) {
         return jdbc.query("select * from genres where name like :name", Map.of("name", String.format("%s%s%s", "%", name, "%")), new GenreMapper()).get(0);
+    }
+
+    @Override
+    public void delete(Genre genre) {
+        jdbc.update("delete from genres where id = :id", Map.of("id", genre.getId()));
     }
 
     private static class GenreMapper implements RowMapper<Genre> {
