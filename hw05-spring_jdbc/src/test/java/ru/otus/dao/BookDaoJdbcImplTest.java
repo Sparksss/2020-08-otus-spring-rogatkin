@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by ilya on Oct, 2020
  */
 @JdbcTest
-@Import({BookDaoJdbcImpl.class})
+@Import({BookDaoJdbcImpl.class, GenreDaoJdbcImpl.class})
 @DisplayName("BookDaoJdbc")
 class BookDaoJdbcImplTest {
 
@@ -27,7 +27,7 @@ class BookDaoJdbcImplTest {
     @Autowired
     GenreDaoJdbcImpl genreDaoJdbc;
 
-    private static final long INITIAL_COUNT_BOOKS = 1;
+    private static final long INITIAL_COUNT_BOOKS = 2;
     private static final String GENRE = "Comedy";
 
     @Test
@@ -37,16 +37,30 @@ class BookDaoJdbcImplTest {
     }
 
     @Test
-    @DisplayName("Добавляем новую книгу")
-    void insert() {
+    @DisplayName("Добавляем новую книгу без авторов и жанра")
+    void addBookWithoutGenreAndAuthors() {
         Book book = new Book("War and Peace");
         bookDaoJdbc.insert(book);
         assertEquals(INITIAL_COUNT_BOOKS + 1, bookDaoJdbc.count());
     }
 
     @Test
+    @DisplayName("Добавляет новую книгу с жанром")
+    void addBookWithGenre() {
+        Genre genre = genreDaoJdbc.getByName(GENRE);
+        Book book = new Book("New Book");
+        book.setGenre(genre);
+        Book book1 = bookDaoJdbc.insert(book);
+        assertThat(book1)
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("name", book.getName());
+        assertEquals(genre.getId(), book1.getGenre().getId());
+        assertEquals(genre.getName(), book1.getGenre().getName());
+    }
+
+    @Test
     @DisplayName("Достаёт строку из таблицы")
-    void getById() {
+    void findBookById() {
         Book book = bookDaoJdbc.getById(INITIAL_COUNT_BOOKS);
         assertThat(book).isNotNull().hasFieldOrPropertyWithValue("id", INITIAL_COUNT_BOOKS);
     }
@@ -63,7 +77,7 @@ class BookDaoJdbcImplTest {
     void getByGenre() {
         Genre comedy = genreDaoJdbc.getByName(GENRE);
         List<Book> books = bookDaoJdbc.getByGenre(comedy);
-        assertNotEquals(0, books.size());
+        assertEquals(1, books.size());
     }
 //
 //    @Test
