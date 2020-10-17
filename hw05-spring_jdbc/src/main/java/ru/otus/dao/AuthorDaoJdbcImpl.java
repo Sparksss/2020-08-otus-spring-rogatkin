@@ -8,6 +8,7 @@ import ru.otus.domains.Author;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +24,8 @@ public class AuthorDaoJdbcImpl implements AuthorDaoJdbc {
     }
 
     @Autowired
-    public AuthorDaoJdbcImpl(NamedParameterJdbcOperations jdbc) {
-        this.jdbc = jdbc;
+    public AuthorDaoJdbcImpl(NamedParameterJdbcOperations namedParameterJdbcOperations) {
+        this.jdbc = namedParameterJdbcOperations;
     }
 
     @Override
@@ -50,6 +51,24 @@ public class AuthorDaoJdbcImpl implements AuthorDaoJdbc {
     @Override
     public List<Author> getAll() {
         return jdbc.query("select * from authors", new AuthorMapper());
+    }
+
+    @Override
+    public void update(Author author) {
+        Map<String, Object> values = new HashMap<>();
+        values.put("name", author.getName());
+        values.put("id", author.getId());
+        jdbc.update("update authors set name = :name where id = :id", values);
+    }
+
+    @Override
+    public void delete(Author author) {
+        jdbc.update("delete from authors where id = :id", Map.of("id", author.getId()));
+    }
+
+    @Override
+    public List<Author> getAllByBookId(long bookId) {
+        return jdbc.query("select * from authors inner join books_authors ba on authors.id = ba.author_id where book_id = :book_id", Map.of("book_id", bookId), new AuthorMapper());
     }
 
     private static class AuthorMapper implements RowMapper<Author> {

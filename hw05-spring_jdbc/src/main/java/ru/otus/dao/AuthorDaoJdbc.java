@@ -10,7 +10,10 @@ import java.util.List;
 public interface AuthorDaoJdbc {
     int count();
     void insert(Author author);
+    void update(Author author);
+    void delete(Author author);
     Author getById(long id);
     Author getByName(String name);
     List<Author> getAll();
+    List<Author> getAllByBookId(long bookId);
 }
