@@ -11,8 +11,11 @@ import java.util.List;
  */
 public interface BookDaoJdbc {
     int count();
-    void insert(Book book);
+    Book insert(Book book);
+    void update(Book book);
+    void delete(Book book);
     Book getById(long id);
+    Book getByName(String name);
     List<Book> getAll();
     List<Book> getByGenre(Genre genre);
     List<Book> getByAuthor(Author author);
