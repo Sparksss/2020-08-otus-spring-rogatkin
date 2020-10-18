@@ -16,8 +16,6 @@ import springboot.services.StudentServiceImpl;
 @EnableConfigurationProperties({QuestionsConfig.class, StudentConfig.class, LocaleConfig.class})
 public class Application {
     public static void main(String[] args) throws Exception {
-        var context = SpringApplication.run(Application.class, args);
-        StudentService studentService = context.getBean(StudentServiceImpl.class);
-        studentService.testing();
+        SpringApplication.run(Application.class, args);
     }
 }
