@@ -60,7 +60,7 @@ public class StudentServiceImpl implements StudentService {
 
     }
 
-    private Student greeting() {
+    public Student greeting() {
         System.out.println(messageSource.getMessage("message.user.greeting",new String[]{": "} , locale));
         Student student = null;
         try {
@@ -86,7 +86,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private void showResultMessage(Student student) {
-        System.out.println(messageSource.getMessage("message.user.name", new String[]{student.getLastName() + ", " + student.getFirstName()}, locale));
+        System.out.println(messageSource.getMessage("message.user.name", new String[]{String.format("%s%s%s", student.getLastName(),", ",student.getFirstName())}, locale));
         System.out.println(messageSource.getMessage("message.rightAnswers.count", new String[]{Integer.toString(student.getCountRightAnswers())}, locale));
         if( student.getCountRightAnswers() >= GRADE) {
             System.out.println(messageSource.getMessage("message.congratulations", new String[]{":"}, locale));

@@ -1,5 +1,7 @@
 package springboot.services;
 
+import springboot.domain.Student;
+
 /**
  * Created by ilya on Sep, 2020
  */
