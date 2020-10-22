@@ -1,6 +1,6 @@
 rootProject.name = 'otus-spring'
 include 'hw01-beginning'
 include 'hw02-annotation_config'
-include 'hw05-spring_jdbc'
-include 'hw04-spring_shell'
 include 'hw03-spring-boot'
+include 'hw04-spring_shell'
+include 'hw05-spring_jdbc'
