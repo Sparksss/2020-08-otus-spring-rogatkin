@@ -26,7 +26,7 @@ public class BookService {
     }
 
    public void save(Book book) throws Exception {
-        if(book == null) throw new Exception("Please select a book whitch need save");
+        if(book == null) throw new Exception("Please select a book which need save");
         this.bookDaoJdbc.insert(book);
     }
 
