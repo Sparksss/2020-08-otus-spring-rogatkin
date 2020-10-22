@@ -45,9 +45,7 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
             values.put("name", book.getName());
             values.put("genre_id", genre.getId());
             id = jdbc.queryForObject("insert into books(name, genre_id) values(:name, :genre_id) RETURNING books.id", values, Long.class);
-        }
-
-        if(authors != null) {
+        } else if(authors != null) {
             long bookId = book.getId();
             Map<String, Long> authorIds = new HashMap<>();
             authorIds.put("book_id", bookId);
@@ -57,6 +55,7 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
                 jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorIds);
             }
         }
+
         book.setId(id);
         return book;
     }
