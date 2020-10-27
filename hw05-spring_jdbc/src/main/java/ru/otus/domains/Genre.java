@@ -10,6 +10,10 @@ public class Genre {
     public Genre() {
     }
 
+    public Genre(String name) {
+        this.name = name;
+    }
+
     public Genre(long id, String name) {
         this.id = id;
         this.name = name;
@@ -29,5 +33,13 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Genre{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
