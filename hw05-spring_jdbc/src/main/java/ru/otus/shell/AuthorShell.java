@@ -3,7 +3,10 @@ package ru.otus.shell;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.domains.Author;
 import ru.otus.services.AuthorService;
+
+import java.util.List;
 
 @ShellComponent
 public class AuthorShell {
@@ -30,6 +33,15 @@ public class AuthorShell {
 
     @ShellMethod(value = "find all authors", key = {"all_authors"})
     public void all() {
-        this.authorService.findAll();
+        List<Author> authors = this.authorService.findAll();
+        for(Author author : authors) {
+            System.out.println(author);
+        }
+    }
+
+    @ShellMethod(value = "get author by id", key = {"find_author"})
+    public void findById(long id) throws Exception {
+        Author author = this.authorService.findById(id);
+        System.out.println(author);
     }
 }
