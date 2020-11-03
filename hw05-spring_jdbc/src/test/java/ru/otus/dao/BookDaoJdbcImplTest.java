@@ -27,6 +27,7 @@ class BookDaoJdbcImplTest {
     @Autowired
     GenreDaoJdbcImpl genreDaoJdbc;
 
+    private static final long FIRST_BOOK_ID = 1;
     private static final long INITIAL_COUNT_BOOKS = 2;
     private static final String GENRE = "Comedy";
 
@@ -61,8 +62,8 @@ class BookDaoJdbcImplTest {
     @Test
     @DisplayName("Достаёт строку из таблицы")
     void findBookById() {
-        Book book = bookDaoJdbc.getById(INITIAL_COUNT_BOOKS);
-        assertThat(book).isNotNull().hasFieldOrPropertyWithValue("id", INITIAL_COUNT_BOOKS);
+        Book book = bookDaoJdbc.getById(FIRST_BOOK_ID);
+        assertThat(book).isNotNull().hasFieldOrPropertyWithValue("id", FIRST_BOOK_ID);
     }
 
     @Test
@@ -79,8 +80,4 @@ class BookDaoJdbcImplTest {
         List<Book> books = bookDaoJdbc.getByGenre(comedy);
         assertEquals(1, books.size());
     }
-//
-//    @Test
-//    void getByAuthor() {
-//    }
 }
