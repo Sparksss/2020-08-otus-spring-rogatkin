@@ -30,6 +30,11 @@ public class BookService {
         this.bookDaoJdbc.insert(book);
     }
 
+    public void update(Book book) throws Exception {
+        if(book == null) throw new Exception("Please select a book which need change");
+        this.bookDaoJdbc.update(book);
+    }
+
     public List<Book> findAll() {
         return this.bookDaoJdbc.getAll();
     }
@@ -43,9 +48,7 @@ public class BookService {
         return this.bookDaoJdbc.count();
     }
 
-    public List<Book> getBooksByAuthor(String authorName) throws Exception {
-        if(authorName == null || authorName.length() < 1) throw new Exception("Wrong name author");
-        Author author = authorDaoJdbc.getByName(authorName);
+    public List<Book> getBooksByAuthor(Author author) throws Exception {
         if(author == null) throw new Exception("Author not found ");
         return bookDaoJdbc.getByAuthor(author);
     }
