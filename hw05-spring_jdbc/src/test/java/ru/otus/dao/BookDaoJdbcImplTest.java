@@ -60,6 +60,16 @@ class BookDaoJdbcImplTest {
     }
 
     @Test
+    @DisplayName("Меняет название книги")
+    public void changeBookName() {
+        Book expectedBook = this.bookDaoJdbc.getById(FIRST_BOOK_ID);
+        expectedBook.setName("New Book Name");
+        this.bookDaoJdbc.update(expectedBook);
+        Book actualBook = this.bookDaoJdbc.getById(FIRST_BOOK_ID);
+        assertEquals(expectedBook.getName(), actualBook.getName());
+    }
+
+    @Test
     @DisplayName("Достаёт строку из таблицы")
     void findBookById() {
         Book book = bookDaoJdbc.getById(FIRST_BOOK_ID);

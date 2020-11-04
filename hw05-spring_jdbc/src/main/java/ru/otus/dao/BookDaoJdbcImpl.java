@@ -66,7 +66,7 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
 
     @Override
     public void update(Book book) {
-        jdbc.update("update books set name = :name, genre_id = :genreId", Map.of("name", book.getName(), "genre_id", book.getGenre().getId()));
+        jdbc.update("update books set name = :name, genre_id = :genre_id", Map.of("name", book.getName(), "genre_id", book.getGenre().getId()));
     }
 
     @Override
