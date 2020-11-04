@@ -39,7 +39,8 @@ class GenreDaoJdbcImplTest {
     }
 
     @Test
-    void insert() {
+    @DisplayName("Добавляет новый жанр")
+    void addNewGenre() {
         int countRowsBeforeInsert = jdbc.count();
         Genre genre = new Genre();
         genre.setName("Fantasy");
@@ -47,16 +48,24 @@ class GenreDaoJdbcImplTest {
         assertEquals(countRowsBeforeInsert + 1, jdbc.count());
     }
 
-//    @Test
-//    void update() {
-//    }
+    @Test
+    @DisplayName("Меняет название жанра")
+    void changeNameOfGenre() {
+        Genre genre = this.jdbc.getById(ROMANCE_ID);
+        genre.setName("Sci-fi");
+        this.jdbc.update(genre);
+        Genre genre1 = this.jdbc.getById(ROMANCE_ID);
+        assertEquals(genre.getName(), genre1.getName());
+    }
 
     @Test
+    @DisplayName("Получает список всех жанров и сравнивает с количеством")
     void getAll() {
         assertEquals(jdbc.getAll().size(), jdbc.count());
     }
 
     @Test
+    @DisplayName("Получает жанр по названию")
     void getByName() {
         Genre genre = jdbc.getByName(GENRE_NAME);
         assertThat(genre).isNotNull().hasFieldOrPropertyWithValue("name", GENRE_NAME);
