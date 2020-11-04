@@ -5,5 +5,7 @@ spring:
     url: jdbc:h2:mem:testdb
     username: test
     password: 12345
-    schema: scheme.sql
+    schema: db/migration/V1__initial_schema.sql
     data: test-data.sql
+  flyway:
+    enabled: false
