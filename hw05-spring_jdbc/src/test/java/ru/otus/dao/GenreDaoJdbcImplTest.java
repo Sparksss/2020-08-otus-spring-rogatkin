@@ -27,20 +27,20 @@ class GenreDaoJdbcImplTest {
 
     @Test
     @DisplayName("Проверяет количество начальное количество записей в БД")
-    void count() {
+    public void count() {
         assertEquals(jdbc.count(), INITIAL_COUNT_GENRES);
     }
 
     @Test
     @DisplayName("Проверяет выбор строки по ID")
-    void getById() {
+    public void getById() {
         Genre genre = jdbc.getById(ROMANCE_ID);
         assertThat(genre).isNotNull().hasFieldOrPropertyWithValue("id", ROMANCE_ID);
     }
 
     @Test
     @DisplayName("Добавляет новый жанр")
-    void addNewGenre() {
+    public void addNewGenre() {
         int countRowsBeforeInsert = jdbc.count();
         Genre genre = new Genre();
         genre.setName("Fantasy");
@@ -50,7 +50,7 @@ class GenreDaoJdbcImplTest {
 
     @Test
     @DisplayName("Меняет название жанра")
-    void changeNameOfGenre() {
+    public void changeNameOfGenre() {
         Genre genre = this.jdbc.getById(ROMANCE_ID);
         genre.setName("Sci-fi");
         this.jdbc.update(genre);
@@ -60,13 +60,13 @@ class GenreDaoJdbcImplTest {
 
     @Test
     @DisplayName("Получает список всех жанров и сравнивает с количеством")
-    void getAll() {
+    public void getAll() {
         assertEquals(jdbc.getAll().size(), jdbc.count());
     }
 
     @Test
     @DisplayName("Получает жанр по названию")
-    void getByName() {
+    public void getByName() {
         Genre genre = jdbc.getByName(GENRE_NAME);
         assertThat(genre).isNotNull().hasFieldOrPropertyWithValue("name", GENRE_NAME);
     }

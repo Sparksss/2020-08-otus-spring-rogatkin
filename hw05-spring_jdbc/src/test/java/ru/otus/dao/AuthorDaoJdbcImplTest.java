@@ -28,13 +28,13 @@ class AuthorDaoJdbcImplTest {
 
     @Test
     @DisplayName("Получаем начальное количество авторов")
-    void getCountAllAuthors() {
+    public void getCountAllAuthors() {
         assertEquals(INITIAL_COUNT_WRITERS, jdbc.count());
     }
 
     @Test
     @DisplayName("Добавляет нового автора")
-    void addNewAuthor() {
+    public void addNewAuthor() {
         Author author = new Author();
         author.setName("new author");
         jdbc.insert(author);
@@ -53,20 +53,20 @@ class AuthorDaoJdbcImplTest {
 
     @Test
     @DisplayName("Получает автора по ID")
-    void getById() {
+    public void getById() {
         Author author = jdbc.getById(CHEKHOV_ID);
         assertThat(author).isNotNull();
     }
 
     @Test
     @DisplayName("Получает список всех авторов")
-    void getAll() {
+    public void getAll() {
         assertEquals(jdbc.count(), jdbc.getAll().size());
     }
 
     @Test
     @DisplayName("Получает автора по имени")
-    void getByName() {
+    public void getByName() {
         Author author = jdbc.getByName(CHEKHOV);
         assertThat(author).isNotNull().hasFieldOrPropertyWithValue("id", CHEKHOV_ID);
     }

@@ -33,13 +33,13 @@ class BookDaoJdbcImplTest {
 
     @Test
     @DisplayName("Проверяет начальное количество записей в таблице")
-    void count() {
+    public void count() {
         assertEquals(INITIAL_COUNT_BOOKS, bookDaoJdbc.count());
     }
 
     @Test
     @DisplayName("Добавляем новую книгу без авторов и жанра")
-    void addBookWithoutGenreAndAuthors() {
+    public void addBookWithoutGenreAndAuthors() {
         Book book = new Book("War and Peace");
         bookDaoJdbc.insert(book);
         assertEquals(INITIAL_COUNT_BOOKS + 1, bookDaoJdbc.count());
@@ -47,7 +47,7 @@ class BookDaoJdbcImplTest {
 
     @Test
     @DisplayName("Добавляет новую книгу с жанром")
-    void addBookWithGenre() {
+    public void addBookWithGenre() {
         Genre genre = genreDaoJdbc.getByName(GENRE);
         Book book = new Book("New Book");
         book.setGenre(genre);
@@ -71,21 +71,21 @@ class BookDaoJdbcImplTest {
 
     @Test
     @DisplayName("Достаёт строку из таблицы")
-    void findBookById() {
+    public void findBookById() {
         Book book = bookDaoJdbc.getById(FIRST_BOOK_ID);
         assertThat(book).isNotNull().hasFieldOrPropertyWithValue("id", FIRST_BOOK_ID);
     }
 
     @Test
     @DisplayName("Проверяет общее количество записей в БД")
-    void getAll() {
+    public void getAll() {
         List<Book> books = bookDaoJdbc.getAll();
         assertEquals(bookDaoJdbc.count(), books.size());
     }
 
     @Test
     @DisplayName("Достаёт все книги определённого жанра")
-    void getByGenre() {
+    public void getByGenre() {
         Genre comedy = genreDaoJdbc.getByName(GENRE);
         List<Book> books = bookDaoJdbc.getByGenre(comedy);
         assertEquals(1, books.size());
