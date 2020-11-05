@@ -30,6 +30,14 @@ public class BookService {
         this.bookDaoJdbc.insert(book);
     }
 
+    public void addAuthorToBook(Book book, Author author) throws Exception {
+        if(book != null && author != null) {
+            this.bookDaoJdbc.addAuthorToBooK(book, author);
+        } else {
+            throw new Exception("Please select a author which need add to book");
+        }
+    }
+
     public void update(Book book) throws Exception {
         if(book == null) throw new Exception("Please select a book which need change");
         this.bookDaoJdbc.update(book);

@@ -50,18 +50,25 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
         bookId = this.count();
 
         if(authors != null) {
-            Map<String, Long> authorIds = new HashMap<>();
-            authorIds.put("book_id", bookId);
-
+            Map<String, Long> authorAndBooksIds;
             for(Author author :authors) {
-                authorIds.put("book_id", bookId);
-                authorIds.put("author_id", author.getId());
-                jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorIds);
+                authorAndBooksIds = new HashMap<>();
+                authorAndBooksIds.put("book_id", bookId);
+                authorAndBooksIds.put("book_id", bookId);
+                jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorAndBooksIds);
             }
         }
 
         book.setId(bookId);
         return book;
+    }
+
+    @Override
+    public void addAuthorToBooK(Book book, Author author) {
+        Map<String, Long> authorAndBooksIds = new HashMap<>();
+        authorAndBooksIds.put("book_id", book.getId());
+        authorAndBooksIds.put("author_id", author.getId());
+        jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorAndBooksIds);
     }
 
     @Override

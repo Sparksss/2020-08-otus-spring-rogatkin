@@ -44,6 +44,13 @@ public class BookShell {
         bookService.save(book);
     }
 
+    @ShellMethod(value = "add author to book", key = {"add_author"})
+    public void addAuthor(@ShellOption long bookId, long authorId) throws Exception {
+        Author author = this.authorService.findById(authorId);
+        Book book = this.bookService.findById(bookId);
+        this.bookService.addAuthorToBook(book, author);
+    }
+
     @ShellMethod(value = "change book name", key = {"change_book_name"})
     public void update(@ShellOption long bookId, String bookName) throws Exception {
         Book book = this.bookService.findById(bookId);
