@@ -40,17 +40,17 @@ public class AuthorDaoJdbcImpl implements AuthorDaoJdbc {
 
     @Override
     public Author getById(long id) {
-        return jdbc.query("select * from authors where id = :id", Map.of("id", id), new AuthorMapper()).get(0);
+        return jdbc.query("select id as author_id, name as author_name from authors where id = :id", Map.of("id", id), new AuthorMapper()).get(0);
     }
 
     @Override
     public Author getByName(String name) {
-        return jdbc.query("select * from authors where name like :name", Map.of("name", String.format("%s%s%s", "%", name, "%")), new AuthorMapper()).get(0);
+        return jdbc.query("select id as author_id, name as author_name from authors where name like :name", Map.of("name", String.format("%s%s%s", "%", name, "%")), new AuthorMapper()).get(0);
     }
 
     @Override
     public List<Author> getAll() {
-        return jdbc.query("select * from authors", new AuthorMapper());
+        return jdbc.query("select id as author_id, name as author_name from authors", new AuthorMapper());
     }
 
     @Override
@@ -68,15 +68,15 @@ public class AuthorDaoJdbcImpl implements AuthorDaoJdbc {
 
     @Override
     public List<Author> getAllByBookId(long bookId) {
-        return jdbc.query("select * from authors inner join books_authors ba on authors.id = ba.author_id where book_id = :book_id", Map.of("book_id", bookId), new AuthorMapper());
+        return jdbc.query("select authors.id as author_id, authors.name as author_name from authors inner join books_authors ba on authors.id = ba.author_id where ba.book_id = :book_id", Map.of("book_id", bookId), new AuthorMapper());
     }
 
     private static class AuthorMapper implements RowMapper<Author> {
 
         @Override
         public Author mapRow(ResultSet resultSet, int i) throws SQLException {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
+            long id = resultSet.getLong("author_id");
+            String name = resultSet.getString("author_name");
             return new Author(id, name);
         }
     }

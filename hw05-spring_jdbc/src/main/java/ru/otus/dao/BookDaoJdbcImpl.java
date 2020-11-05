@@ -10,6 +10,7 @@ import ru.otus.domains.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +22,12 @@ import java.util.Map;
 public class BookDaoJdbcImpl implements BookDaoJdbc {
 
     private NamedParameterJdbcOperations jdbc;
+    private AuthorDaoJdbc authorDaoJdbc;
 
     @Autowired
-    public BookDaoJdbcImpl(NamedParameterJdbcOperations namedParameterJdbcOperations) {
+    public BookDaoJdbcImpl(NamedParameterJdbcOperations namedParameterJdbcOperations, AuthorDaoJdbc authorDaoJdbc) {
         this.jdbc = namedParameterJdbcOperations;
+        this.authorDaoJdbc = authorDaoJdbc;
     }
 
     @Override
@@ -54,7 +57,7 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
             for(Author author :authors) {
                 authorAndBooksIds = new HashMap<>();
                 authorAndBooksIds.put("book_id", bookId);
-                authorAndBooksIds.put("book_id", bookId);
+                authorAndBooksIds.put("author_id", author.getId());
                 jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorAndBooksIds);
             }
         }
@@ -69,6 +72,13 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
         authorAndBooksIds.put("book_id", book.getId());
         authorAndBooksIds.put("author_id", author.getId());
         jdbc.update("insert into books_authors(book_id, author_id) values(:book_id, :author_id)", authorAndBooksIds);
+        if(book.getAuthors() == null) {
+            List<Author> authors = new ArrayList<>();
+            authors.add(author);
+            book.setAuthors(authors);
+        } else {
+            book.getAuthors().add(author);
+        }
     }
 
     @Override
@@ -83,7 +93,10 @@ public class BookDaoJdbcImpl implements BookDaoJdbc {
 
     @Override
     public Book getById(long id) {
-        return jdbc.query("select b.id as book_id, b.name as book_name, g.id as genre_id, g.name as genre_name from books as b inner join genres g on g.id = b.genre_id where b.id = :id", Map.of("id",id), new BookMapperWithGenre()).get(0);
+        List<Author> authors = this.authorDaoJdbc.getAllByBookId(id);
+        Book book = jdbc.query("select b.id as book_id, b.name as book_name, g.id as genre_id, g.name as genre_name from books as b inner join genres g on g.id = b.genre_id where b.id = :id", Map.of("id",id), new BookMapperWithGenre()).get(0);
+        book.setAuthors(authors);
+        return book;
     }
 
     @Override
