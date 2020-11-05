@@ -32,7 +32,7 @@ public class BookShell {
     public void all() {
         List<Book> books = bookService.findAll();
         for(Book book : books) {
-            System.out.println(book.getName());
+            System.out.println(book);
         }
     }
 

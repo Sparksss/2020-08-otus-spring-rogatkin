@@ -60,4 +60,22 @@ public class Book {
     public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
+
+    public String getAuthorsAsString() {
+        StringBuilder authors = new StringBuilder();
+        for(Author author : this.authors) {
+            authors.append(author.getName() + " ,");
+        }
+        return authors.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\n' +
+                ", genre=" + (genre != null ? genre.getName() : "") + '\n' +
+                ", authors=" + (authors != null ? this.getAuthorsAsString() : "")  +
+                '}';
+    }
 }
