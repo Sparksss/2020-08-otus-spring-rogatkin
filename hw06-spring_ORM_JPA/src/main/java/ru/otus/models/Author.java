@@ -1,15 +1,24 @@
 package ru.otus.models;
 
+import lombok.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by ilya on Oct, 2020
  */
+@Data
+@Entity
+@NoArgsConstructor
+@Table(name = "authors")
 public class Author {
+
+    @Id
     private long id;
+
     private String name;
-
-
-    public Author() {
-    }
 
     public Author(String name) {
         this.name = name;
@@ -17,22 +26,6 @@ public class Author {
 
     public Author(long id, String name) {
         this.id = id;
-        this.name = name;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 

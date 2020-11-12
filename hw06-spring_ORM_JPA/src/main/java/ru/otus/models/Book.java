@@ -1,18 +1,27 @@
 package ru.otus.models;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
  * Created by ilya on Oct, 2020
  */
+@Data
+@Entity
+@NoArgsConstructor
+@Table(name = "books")
 public class Book {
+
+    @Id
     private long id;
     private String name;
     private Genre genre;
     private List<Author> authors;
-
-    public Book() {
-    }
 
     public Book(String name) {
         this.name = name;
@@ -29,37 +38,6 @@ public class Book {
         this.genre = genre;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public List<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setGenre(Genre genre) {
-        this.genre = genre;
-    }
-
-    public void setAuthors(List<Author> authors) {
-        this.authors = authors;
-    }
 
     public String getAuthorsAsString() {
         StringBuilder authors = new StringBuilder();
