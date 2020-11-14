@@ -1,2 +1,21 @@
 server:
   port: 8080
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: 12345
+    driverClassName: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: validate
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    show-sql: true
+  flyway:
+    enabled: true
