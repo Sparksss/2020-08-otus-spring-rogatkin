@@ -35,7 +35,6 @@ allprojects {
 
     group "ru.otus"
 
-
     repositories {
         mavenCentral()
         maven { url 'https://repo.spring.io/milestone' }
