@@ -2,9 +2,7 @@ package ru.otus.models;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by ilya on Oct, 2020
@@ -16,8 +14,11 @@ import javax.persistence.Table;
 public class Author {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
+    @Column(name = "name")
     private String name;
 
     public Author(String name) {
