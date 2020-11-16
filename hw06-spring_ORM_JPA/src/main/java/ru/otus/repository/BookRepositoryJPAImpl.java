@@ -1,7 +1,9 @@
 package ru.otus.repository;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.models.Author;
 import ru.otus.models.Book;
+import ru.otus.models.BookAuthor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,15 +18,24 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
     @PersistenceContext
     private EntityManager em;
 
+    private BookAuthorRepositoryJPA bookAuthorRepositoryJPA;
+
     @Transactional
     @Override
     public Book save(Book book) {
         if(book.getId() == 0) {
             em.persist(book);
-            return book;
         } else {
-          return em.merge(book);
+          book = em.merge(book);
         }
+        List<Author> authors = book.getAuthors();
+        if(authors != null) {
+            for(Author author : authors) {
+                BookAuthor bookAuthor = new BookAuthor(book.getId(), author.getId());
+                this.bookAuthorRepositoryJPA.save(bookAuthor);
+            }
+        }
+        return book;
     }
 
     @Override
@@ -60,4 +71,5 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         query.setParameter("id", id);
         query.executeUpdate();
     }
+
 }
