@@ -51,14 +51,14 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
 
     @Override
     public Genre findByName(String name) {
-        TypedQuery<Genre> query = entityManager.createQuery("select g.id, g.name from Genre g where g.name like :name", Genre.class);
+        TypedQuery<Genre> query = entityManager.createQuery("select g from Genre g where g.name like :name", Genre.class);
         query.setParameter("name", String.format("%s%s%s", "%", name, "%"));
         return query.getSingleResult();
     }
 
     @Override
     public List<Genre> findAll() {
-        return entityManager.createQuery("select g.id, g.name from Genre g", Genre.class).getResultList();
+        return entityManager.createQuery("select g from Genre g", Genre.class).getResultList();
     }
 
     @Override
