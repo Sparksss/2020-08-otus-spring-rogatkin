@@ -45,14 +45,14 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
 
     @Override
     public Book findByName(String name) {
-        TypedQuery<Book> query = em.createQuery("select b.id, b.name from Book b where b.name like :name", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b where b.name like :name", Book.class);
         query.setParameter("name", String.format("%s%s%s", "%", name, "%"));
         return query.getSingleResult();
     }
 
     @Override
     public List<Book> findAll() {
-        return em.createQuery("select b.id, b.name from Book b", Book.class).getResultList();
+        return em.createQuery("select b from Book b", Book.class).getResultList();
     }
 
     @Transactional
@@ -72,4 +72,22 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         query.executeUpdate();
     }
 
+    @Override
+    public List<Book> findAllByAuthor(long authorId) {
+        TypedQuery<Book> query = em.createQuery("select b from Book b inner join BookAuthor ba on b.id = ba.bookId inner join Author a on ba.authorId = a.id where a.id = :authorId", Book.class);
+        query.setParameter("authorId", authorId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Book> findAllByGenre(long genreId) {
+        TypedQuery<Book> query = em.createQuery("select b from Book b where b.genre.id = :genreId", Book.class);
+        query.setParameter("genreId", genreId);
+        return query.getResultList();
+    }
+
+    @Override
+    public int countBook() {
+        return this.em.createQuery("select count(b) from Book b", int.class).getSingleResult();
+    }
 }
