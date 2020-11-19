@@ -9,7 +9,9 @@ public interface BookRepositoryJPA {
     Book findById(long id);
     Book findByName(String name);
     List<Book> findAll();
-
     void updateNameById(long id, String name);
     void deleteById(long id);
+    List<Book> findAllByAuthor(long authorId);
+    List<Book> findAllByGenre(long genreId);
+    int countBook();
 }
