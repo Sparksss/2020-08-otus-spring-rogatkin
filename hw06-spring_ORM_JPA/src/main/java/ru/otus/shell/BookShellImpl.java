@@ -17,6 +17,7 @@ public class BookShellImpl implements BookShell {
 
     private BookService bookService;
 
+
     public BookShellImpl(BookService bookService) {
         this.bookService = bookService;
     }
@@ -61,8 +62,27 @@ public class BookShellImpl implements BookShell {
         }
     }
 
+    @ShellMethod(value = "find books by author", key = {"find_book_by_author"})
     @Override
-    public void findByAuthor(long authorId) {
+    public void findByAuthor(@ShellOption long authorId) {
+        try {
+            for(Book book : this.bookService.getBooksByAuthor(authorId)) {
+                System.out.println(book);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
+    @ShellMethod(value = "find books by genre", key = {"find_book_by_genre"})
+    @Override
+    public void findByGenre(@ShellOption long genreId) {
+        try {
+            for(Book book : this.bookService.getBooksByGenre(genreId)) {
+                System.out.println(book);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
