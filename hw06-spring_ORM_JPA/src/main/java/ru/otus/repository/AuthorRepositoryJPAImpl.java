@@ -25,7 +25,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
     }
 
     @Override
-    public Author add(Author author) {
+    public Author save(Author author) {
         if(author.getId() == 0) {
             entityManager.persist(author);
             return author;
@@ -49,7 +49,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @Override
     public Author findByName(String name) {
-        TypedQuery<Author> query = entityManager.createQuery("select a.id, a.name from Author a where a.name like :name", Author.class);
+        TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.name like :name", Author.class);
         query.setParameter("name", String.format("%s%s%s", "%", name, "%"));
         return query.getSingleResult();
     }
@@ -61,7 +61,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @Override
     public List<Author> getAllAuthorsByBookId(long bookId) {
-        TypedQuery<Author> query = entityManager.createQuery("select a.id, a.name from Author a inner join BookAthor ba where ba.bookId = :book_id", Author.class);
+        TypedQuery<Author> query = entityManager.createQuery("select a from Author a inner join BookAuthor ba where ba.bookId = :book_id", Author.class);
         query.setParameter("book_id", bookId);
         return query.getResultList();
     }
