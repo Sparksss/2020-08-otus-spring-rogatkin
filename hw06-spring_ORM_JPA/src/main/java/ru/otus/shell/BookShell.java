@@ -10,4 +10,5 @@ public interface BookShell {
     void update(long bookId, String bookName);
     void findById(long id);
     void findByAuthor(long authorId);
+    void findByGenre(long genreId);
 }
