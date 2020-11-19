@@ -1,6 +1,8 @@
 server:
   port: 8080
 spring:
+  flyway:
+    enabled: false
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/test
@@ -17,5 +19,3 @@ spring:
         format_sql: true
 
     show-sql: true
-  flyway:
-    enabled: true
