@@ -1,9 +1,10 @@
 package ru.otus.services;
 
 import org.springframework.stereotype.Component;
-import ru.otus.models.Author;
 import ru.otus.models.Book;
+import ru.otus.models.BookAuthor;
 import ru.otus.models.Genre;
+import ru.otus.repository.BookAuthorRepositoryJPA;
 import ru.otus.repository.BookRepositoryJPA;
 import ru.otus.repository.GenreRepositoryJPA;
 
@@ -18,6 +19,7 @@ public class BookServiceImpl implements BookService {
 
     private BookRepositoryJPA bookRepository;
     private GenreRepositoryJPA genreRepositoryJPA;
+    private BookAuthorRepositoryJPA bookAuthorRepositoryJPA;
 
     public BookServiceImpl(BookRepositoryJPA bookRepositoryJPA, GenreRepositoryJPA genreRepositoryJPA) {
         this.bookRepository = bookRepositoryJPA;
@@ -26,6 +28,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void addBook(String bookName, String genreName) throws Exception {
+        if(!this.isCorrectValue(bookName)) throw new Exception("Wrong book name");
+        if(!this.isCorrectValue(genreName)) throw new Exception("Wrong genre name");
         Genre genre = this.genreRepositoryJPA.findByName(genreName);
         Book book = new Book(bookName);
         book.setGenre(genre);
@@ -33,8 +37,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void addAuthorToBook(Book book, Author author) throws Exception {
-
+    public void addAuthorToBook(long bookId, long authorId) throws Exception {
+        if(bookId == 0) throw new Exception("wrong book id");
+        if(authorId == 0) throw new Exception("wrong author id");
+        BookAuthor bookAuthor = new BookAuthor(bookId, authorId);
+        this.bookAuthorRepositoryJPA.save(bookAuthor);
     }
 
     @Override
@@ -53,21 +60,28 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book findById(long id) throws Exception {
+        if(id == 0) throw new Exception("Wrong parameter id");
         return this.bookRepository.findById(id);
     }
 
     @Override
     public int getCountBooks() {
-        return 0;
+        return this.bookRepository.countBook();
     }
 
     @Override
-    public List<Book> getBooksByAuthor(Author author) throws Exception {
-        return null;
+    public List<Book> getBooksByAuthor(long authorId) throws Exception {
+        if(authorId == 0) throw new Exception("Wrong author id");
+        return this.bookRepository.findAllByAuthor(authorId);
     }
 
     @Override
-    public List<Book> getBooksByGenre(String genreName) throws Exception {
-        return null;
+    public List<Book> getBooksByGenre(long genreId) throws Exception {
+        if(genreId == 0) throw new Exception("Wrong genre id");
+        return this.bookRepository.findAllByGenre(genreId);
+    }
+
+    private boolean isCorrectValue(String value) {
+        return value != null && !value.isEmpty();
     }
 }
