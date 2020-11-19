@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface AuthorRepositoryJPA {
     int countAll();
-    Author add(Author genre);
+    Author save(Author author);
     void delete(long id);
     Author findById(long id);
     Author findByName(String name);
