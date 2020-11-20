@@ -1,5 +1,6 @@
 package ru.otus.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.models.Author;
 import ru.otus.repository.AuthorRepositoryJPA;
@@ -14,6 +15,11 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService {
 
     private AuthorRepositoryJPA authorRepositoryJPA;
+
+    @Autowired
+    public AuthorServiceImpl(AuthorRepositoryJPA authorRepositoryJPA) {
+        this.authorRepositoryJPA = authorRepositoryJPA;
+    }
 
     @Override
     public void save(String authorName) throws Exception {
