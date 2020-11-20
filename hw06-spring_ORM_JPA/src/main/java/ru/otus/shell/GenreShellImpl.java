@@ -1,5 +1,6 @@
 package ru.otus.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -14,6 +15,11 @@ import ru.otus.services.GenreService;
 public class GenreShellImpl implements GenreShell {
 
     private GenreService genreService;
+
+    @Autowired
+    public GenreShellImpl(GenreService genreService) {
+        this.genreService = genreService;
+    }
 
     @ShellMethod(value = "add new genre", key = {"add_genre"})
     @Override

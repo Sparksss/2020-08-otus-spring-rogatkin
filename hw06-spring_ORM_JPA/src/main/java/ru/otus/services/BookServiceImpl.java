@@ -1,5 +1,6 @@
 package ru.otus.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.models.Book;
 import ru.otus.models.BookAuthor;
@@ -21,6 +22,7 @@ public class BookServiceImpl implements BookService {
     private GenreRepositoryJPA genreRepositoryJPA;
     private BookAuthorRepositoryJPA bookAuthorRepositoryJPA;
 
+    @Autowired
     public BookServiceImpl(BookRepositoryJPA bookRepositoryJPA, GenreRepositoryJPA genreRepositoryJPA) {
         this.bookRepository = bookRepositoryJPA;
         this.genreRepositoryJPA = genreRepositoryJPA;

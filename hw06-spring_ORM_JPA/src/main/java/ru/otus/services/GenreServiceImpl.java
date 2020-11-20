@@ -1,5 +1,6 @@
 package ru.otus.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.models.Genre;
 import ru.otus.repository.GenreRepositoryJPA;
@@ -15,6 +16,7 @@ public class GenreServiceImpl implements GenreService {
 
     private GenreRepositoryJPA genreRepositoryJPA;
 
+    @Autowired
     public GenreServiceImpl(GenreRepositoryJPA genreRepositoryJPA) {
         this.genreRepositoryJPA = genreRepositoryJPA;
     }
