@@ -1,5 +1,6 @@
 package ru.otus.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.otus.models.Author;
 
@@ -7,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /*
@@ -19,11 +21,18 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    public AuthorRepositoryJPAImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+
     @Override
     public int countAll() {
        return entityManager.createQuery("select count(a) from Author a", int.class).getSingleResult();
     }
 
+    @Transactional
     @Override
     public Author save(Author author) {
         if(author.getId() == 0) {
@@ -35,6 +44,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
     }
 
 
+    @Transactional
     @Override
     public void delete(long id) {
         Query query = entityManager.createQuery("delete from Author a where a.id = :id");
@@ -56,7 +66,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @Override
     public List<Author> getAll() {
-        return entityManager.createQuery("select count(a) from Author a", Author.class).getResultList();
+        return entityManager.createQuery("select a from Author a", Author.class).getResultList();
     }
 
     @Override
