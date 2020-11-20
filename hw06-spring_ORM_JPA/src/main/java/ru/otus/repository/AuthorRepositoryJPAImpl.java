@@ -52,11 +52,13 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
         query.executeUpdate();
     }
 
+    @Transactional
     @Override
     public Author findById(long id) {
         return entityManager.find(Author.class, id);
     }
 
+    @Transactional
     @Override
     public Author findByName(String name) {
         TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.name like :name", Author.class);
@@ -64,11 +66,13 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
         return query.getSingleResult();
     }
 
+    @Transactional
     @Override
     public List<Author> getAll() {
         return entityManager.createQuery("select a from Author a", Author.class).getResultList();
     }
 
+    @Transactional
     @Override
     public List<Author> getAllAuthorsByBookId(long bookId) {
         TypedQuery<Author> query = entityManager.createQuery("select a from Author a inner join BookAuthor ba where ba.bookId = :book_id", Author.class);

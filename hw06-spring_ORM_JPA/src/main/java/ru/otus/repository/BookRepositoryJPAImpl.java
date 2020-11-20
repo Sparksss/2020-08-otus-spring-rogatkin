@@ -45,11 +45,13 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         return book;
     }
 
+    @Transactional
     @Override
     public Book findById(long id) {
         return em.find(Book.class, id);
     }
 
+    @Transactional
     @Override
     public Book findByName(String name) {
         TypedQuery<Book> query = em.createQuery("select b from Book b where b.name like :name", Book.class);
@@ -57,6 +59,7 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         return query.getSingleResult();
     }
 
+    @Transactional
     @Override
     public List<Book> findAll() {
         return em.createQuery("select b from Book b", Book.class).getResultList();
@@ -79,6 +82,7 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         query.executeUpdate();
     }
 
+    @Transactional
     @Override
     public List<Book> findAllByAuthor(long authorId) {
         TypedQuery<Book> query = em.createQuery("select b from Book b inner join BookAuthor ba on b.id = ba.bookId inner join Author a on ba.authorId = a.id where a.id = :authorId", Book.class);
@@ -86,6 +90,7 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         return query.getResultList();
     }
 
+    @Transactional
     @Override
     public List<Book> findAllByGenre(long genreId) {
         TypedQuery<Book> query = em.createQuery("select b from Book b where b.genre.id = :genreId", Book.class);
@@ -93,6 +98,7 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
         return query.getResultList();
     }
 
+    @Transactional
     @Override
     public int countBook() {
         return this.em.createQuery("select count(b) from Book b", int.class).getSingleResult();

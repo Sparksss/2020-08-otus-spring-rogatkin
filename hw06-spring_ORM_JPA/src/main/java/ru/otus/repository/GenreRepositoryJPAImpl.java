@@ -1,4 +1,4 @@
-package ru.otus.repository;
+package ru.otus.repositoryp;
 
 import org.springframework.stereotype.Repository;
 import ru.otus.models.Genre;
@@ -52,11 +52,13 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         query.executeUpdate();
     }
 
+    @Transactional
     @Override
     public Genre findById(long id) {
         return entityManager.find(Genre.class, id);
     }
 
+    @Transactional
     @Override
     public Genre findByName(String name) {
         TypedQuery<Genre> query = entityManager.createQuery("select g from Genre g where g.name like :name", Genre.class);
@@ -64,11 +66,13 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         return query.getSingleResult();
     }
 
+    @Transactional
     @Override
     public List<Genre> findAll() {
         return entityManager.createQuery("select g from Genre g", Genre.class).getResultList();
     }
 
+    @Transactional
     @Override
     public int count() {
         return entityManager.createQuery("select count(g) from Genre g", int.class).getSingleResult();
