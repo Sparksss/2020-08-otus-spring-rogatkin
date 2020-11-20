@@ -1,5 +1,6 @@
 package ru.otus.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.models.BookAuthor;
 
@@ -16,6 +17,11 @@ public class BookAuthorRepositoryRepositoryJPAImpl implements BookAuthorReposito
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    public BookAuthorRepositoryRepositoryJPAImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Transactional
     @Override
