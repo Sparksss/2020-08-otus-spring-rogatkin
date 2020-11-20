@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /*
@@ -19,6 +20,11 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
     @PersistenceContext
     private EntityManager entityManager;
 
+    public GenreRepositoryJPAImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    @Transactional
     @Override
     public Genre save(Genre genre) {
         if(genre.getId() == 0) {
@@ -29,6 +35,7 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         }
     }
 
+    @Transactional
     @Override
     public void updateById(String name, long id) {
         Query query = entityManager.createQuery("update Genre g set g.name = :name where g.id = :id");
@@ -37,6 +44,7 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         query.executeUpdate();
     }
 
+    @Transactional
     @Override
     public void delete(long id) {
         Query query = entityManager.createQuery("delete from Genre g where g.id = :id");
