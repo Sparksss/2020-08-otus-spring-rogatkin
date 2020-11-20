@@ -1,5 +1,6 @@
 package ru.otus.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -14,6 +15,11 @@ import ru.otus.services.AuthorService;
 public class AuthorShellImpl implements AuthorShell {
 
     private AuthorService authorService;
+
+    @Autowired
+    public AuthorShellImpl(AuthorService authorService) {
+        this.authorService = authorService;
+    }
 
     @ShellMethod(value = "add new author", key = {"add_author"})
     @Override
