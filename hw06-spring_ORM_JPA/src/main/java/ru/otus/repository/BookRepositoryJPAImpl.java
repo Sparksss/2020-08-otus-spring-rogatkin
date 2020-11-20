@@ -1,5 +1,6 @@
 package ru.otus.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.models.Author;
 import ru.otus.models.Book;
@@ -19,6 +20,12 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
     private EntityManager em;
 
     private BookAuthorRepositoryJPA bookAuthorRepositoryJPA;
+
+    @Autowired
+    public BookRepositoryJPAImpl(EntityManager em, BookAuthorRepositoryJPA bookAuthorRepositoryJPA) {
+        this.em = em;
+        this.bookAuthorRepositoryJPA = bookAuthorRepositoryJPA;
+    }
 
     @Transactional
     @Override
