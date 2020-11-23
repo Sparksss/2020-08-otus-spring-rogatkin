@@ -1,21 +1,20 @@
 package ru.otus.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.otus.models.Author;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /*
  * @created 14/11 - otus-spring
  * @author Ilya Rogatkin
  */
-@Component
+@Repository
 public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @PersistenceContext
@@ -32,7 +31,6 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
        return entityManager.createQuery("select count(a) from Author a", int.class).getSingleResult();
     }
 
-    @Transactional
     @Override
     public Author save(Author author) {
         if(author.getId() == 0) {
@@ -44,7 +42,6 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
     }
 
 
-    @Transactional
     @Override
     public void delete(long id) {
         Query query = entityManager.createQuery("delete from Author a where a.id = :id");
@@ -52,13 +49,11 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
         query.executeUpdate();
     }
 
-    @Transactional
     @Override
     public Author findById(long id) {
         return entityManager.find(Author.class, id);
     }
 
-    @Transactional
     @Override
     public Author findByName(String name) {
         TypedQuery<Author> query = entityManager.createQuery("select a from Author a where a.name like :name", Author.class);
@@ -66,16 +61,14 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
         return query.getSingleResult();
     }
 
-    @Transactional
     @Override
     public List<Author> getAll() {
         return entityManager.createQuery("select a from Author a", Author.class).getResultList();
     }
 
-    @Transactional
     @Override
     public List<Author> getAllAuthorsByBookId(long bookId) {
-        TypedQuery<Author> query = entityManager.createQuery("select a from Author a inner join BookAuthor ba where ba.bookId = :book_id", Author.class);
+        TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a, BookAuthor ba WHERE ba.bookId = :book_id", Author.class);
         query.setParameter("book_id", bookId);
         return query.getResultList();
     }
