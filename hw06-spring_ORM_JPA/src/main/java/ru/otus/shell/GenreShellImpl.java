@@ -31,7 +31,7 @@ public class GenreShellImpl implements GenreShell {
         }
     }
 
-    @ShellMethod(value = "find all genres", key = {"find_genres"})
+    @ShellMethod(value = "find all genres", key = {"all_genres"})
     @Override
     public void all() {
         for(Genre genre : this.genreService.findAll()) {
