@@ -68,7 +68,7 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @Override
     public List<Author> getAllAuthorsByBookId(long bookId) {
-        TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a, BookAuthor ba WHERE ba.bookId = :book_id", Author.class);
+        TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a inner join BookAuthor ba on a.id = ba.authorId WHERE ba.bookId = :book_id", Author.class);
         query.setParameter("book_id", bookId);
         return query.getResultList();
     }
