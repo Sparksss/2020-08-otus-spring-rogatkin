@@ -16,7 +16,8 @@ CREATE TABLE authors (
 CREATE TABLE books (
     id bigserial primary key,
     name varchar(200) not null,
-    genre_id bigserial references genres(id)
+    genre_id bigserial,
+    FOREIGN KEY (genre_id) references genres(id)
 );
 
 CREATE TABLE books_authors (
