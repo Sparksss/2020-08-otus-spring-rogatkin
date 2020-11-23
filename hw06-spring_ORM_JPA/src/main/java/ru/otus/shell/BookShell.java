@@ -11,4 +11,5 @@ public interface BookShell {
     void findById(long id);
     void findByAuthor(long authorId);
     void findByGenre(long genreId);
+    void addAuthorToBook(long bookId, long authorId);
 }
