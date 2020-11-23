@@ -6,7 +6,6 @@ import ru.otus.models.BookAuthor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 
 /*
  * @created 16/11 - otus-spring
@@ -23,7 +22,6 @@ public class BookAuthorRepositoryRepositoryJPAImpl implements BookAuthorReposito
         this.entityManager = entityManager;
     }
 
-    @Transactional
     @Override
     public BookAuthor save(BookAuthor bookAuthor) {
         if(bookAuthor.getId() == 0) {
