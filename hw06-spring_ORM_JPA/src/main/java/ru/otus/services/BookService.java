@@ -1,5 +1,6 @@
 package ru.otus.services;
 
+import ru.otus.dto.BookDto;
 import ru.otus.models.Book;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface BookService {
     void addAuthorToBook(long bookId, long authorId) throws Exception;
     void update(long bookId, String bookName) throws Exception;
     List<Book> findAll();
-    Book findById(long id) throws Exception;
+    BookDto findById(long id) throws Exception;
     int getCountBooks();
     List<Book> getBooksByAuthor(long authorId) throws Exception;
     List<Book> getBooksByGenre(long genreId) throws Exception;
