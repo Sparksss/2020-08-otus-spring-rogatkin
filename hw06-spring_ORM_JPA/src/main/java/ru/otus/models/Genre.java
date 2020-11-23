@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ilya on Oct, 2020
@@ -29,13 +31,5 @@ public class Genre {
     public Genre(long id, String name) {
         this.id = id;
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Genre{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
