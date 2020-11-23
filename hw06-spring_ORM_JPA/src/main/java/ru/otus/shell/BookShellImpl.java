@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import ru.otus.dto.BookDto;
 import ru.otus.models.Book;
 import ru.otus.services.BookService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -26,9 +28,20 @@ public class BookShellImpl implements BookShell {
     @ShellMethod(value = "find all books", key = {"all_books"})
     @Override
     public void all() {
-        List<Book> books = bookService.findAll();
-        for(Book book : books) {
-            System.out.println(book);
+        List<Book> books = new ArrayList<>();
+        try {
+            books = bookService.findAll();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.getStackTrace();
+        }
+
+        if(books.size() == 0) {
+            System.out.println("Book bot found in library");
+        } else {
+            for(Book book : books) {
+                System.out.println(book);
+            }
         }
     }
 
@@ -56,7 +69,7 @@ public class BookShellImpl implements BookShell {
     @Override
     public void findById(@ShellOption long id) {
         try {
-            Book book = this.bookService.findById(id);
+            BookDto book = this.bookService.findById(id);
             System.out.println(book);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -85,5 +98,16 @@ public class BookShellImpl implements BookShell {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    @ShellMethod(value = "add author to book", key = {"add_author_to_book"})
+    @Override
+    public void addAuthorToBook(long bookId, long authorId) {
+        try {
+            this.bookService.addAuthorToBook(bookId, authorId);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
