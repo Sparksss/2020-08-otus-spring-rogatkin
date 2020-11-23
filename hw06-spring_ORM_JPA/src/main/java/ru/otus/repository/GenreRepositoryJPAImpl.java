@@ -1,4 +1,4 @@
-package ru.otus.repositoryp;
+package ru.otus.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.otus.models.Genre;
@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /*
@@ -24,7 +23,6 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         this.entityManager = entityManager;
     }
 
-    @Transactional
     @Override
     public Genre save(Genre genre) {
         if(genre.getId() == 0) {
@@ -35,7 +33,6 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         }
     }
 
-    @Transactional
     @Override
     public void updateById(String name, long id) {
         Query query = entityManager.createQuery("update Genre g set g.name = :name where g.id = :id");
@@ -44,7 +41,6 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         query.executeUpdate();
     }
 
-    @Transactional
     @Override
     public void delete(long id) {
         Query query = entityManager.createQuery("delete from Genre g where g.id = :id");
@@ -52,13 +48,11 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         query.executeUpdate();
     }
 
-    @Transactional
     @Override
     public Genre findById(long id) {
         return entityManager.find(Genre.class, id);
     }
 
-    @Transactional
     @Override
     public Genre findByName(String name) {
         TypedQuery<Genre> query = entityManager.createQuery("select g from Genre g where g.name like :name", Genre.class);
@@ -66,13 +60,11 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
         return query.getSingleResult();
     }
 
-    @Transactional
     @Override
     public List<Genre> findAll() {
         return entityManager.createQuery("select g from Genre g", Genre.class).getResultList();
     }
 
-    @Transactional
     @Override
     public int count() {
         return entityManager.createQuery("select count(g) from Genre g", int.class).getSingleResult();
