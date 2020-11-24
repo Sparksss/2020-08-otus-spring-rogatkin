@@ -44,7 +44,7 @@ public class GenreShellImpl implements GenreShell {
     public void findById(@ShellOption long id) {
         try {
             Genre genre = this.genreService.findById(id);
-            System.out.println(genre);
+            System.out.println(genre != null ? genre : String.format("%s%s%s", "genre with id: ", id, " does not exists"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
