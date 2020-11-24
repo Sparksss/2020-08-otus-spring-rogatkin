@@ -15,5 +15,5 @@ public interface GenreRepositoryJPA {
     Genre findById(long id);
     Genre findByName(String name);
     List<Genre> findAll();
-    int count();
+    Long count();
 }
