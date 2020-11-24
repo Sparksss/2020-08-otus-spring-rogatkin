@@ -44,7 +44,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional(readOnly = true)
     @Override
-    public int countAll() {
+    public Long countAll() {
         return this.genreRepositoryJPA.count();
     }
 
