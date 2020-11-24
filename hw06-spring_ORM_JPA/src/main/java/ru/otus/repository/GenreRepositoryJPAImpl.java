@@ -43,7 +43,7 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
 
     @Override
     public void delete(long id) {
-        Query query = entityManager.createQuery("delete from Genre g where g.id = :id");
+        Query query = this.entityManager.createQuery("delete from Genre g where g.id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
@@ -66,7 +66,7 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
     }
 
     @Override
-    public int count() {
-        return entityManager.createQuery("select count(g) from Genre g", int.class).getSingleResult();
+    public Long count() {
+        return entityManager.createQuery("select count(g) from Genre g", Long.class).getSingleResult();
     }
 }
