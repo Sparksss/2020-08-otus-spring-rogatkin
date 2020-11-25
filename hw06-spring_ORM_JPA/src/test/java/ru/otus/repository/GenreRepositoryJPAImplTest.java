@@ -26,7 +26,7 @@ class GenreRepositoryJPAImplTest {
 
     private final Long FIRST_ID = 1L;
     private final String DETECTIVE = "Detective";
-    private final Long INITIAL_COUNT_GENRES = 2L;
+    private final Long INITIAL_COUNT_GENRES = 3L;
 
 
     @DisplayName("Получать общее количество жанров")
