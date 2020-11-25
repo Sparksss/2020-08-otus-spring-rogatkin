@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.otus.models.Author;
+import ru.otus.models.Comment;
 import ru.otus.models.Genre;
 
 import java.util.ArrayList;
@@ -21,4 +22,5 @@ public class BookDto {
     private String name;
     private Genre genre;
     private List<Author> authors = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 }
