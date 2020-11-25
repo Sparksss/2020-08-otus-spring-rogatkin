@@ -13,5 +13,5 @@ public interface BookRepositoryJPA {
     void deleteById(long id);
     List<Book> findAllByAuthor(long authorId);
     List<Book> findAllByGenre(long genreId);
-    int countBook();
+    Long countBook();
 }
