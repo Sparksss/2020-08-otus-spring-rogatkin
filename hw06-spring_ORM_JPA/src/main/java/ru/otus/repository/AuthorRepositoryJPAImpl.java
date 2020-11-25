@@ -27,8 +27,8 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
 
     @Override
-    public int countAll() {
-       return entityManager.createQuery("select count(a) from Author a", int.class).getSingleResult();
+    public Long countAll() {
+       return entityManager.createQuery("select count(a) from Author a", Long.class).getSingleResult();
     }
 
     @Override

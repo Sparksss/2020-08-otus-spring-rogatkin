@@ -9,7 +9,7 @@ import java.util.List;
  * @author Ilya Rogatkin
  */
 public interface AuthorRepositoryJPA {
-    int countAll();
+    Long countAll();
     Author save(Author author);
     void delete(long id);
     Author findById(long id);
