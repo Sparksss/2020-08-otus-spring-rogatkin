@@ -4,7 +4,6 @@ import org.assertj.core.api.Condition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import ru.otus.models.Book;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Репозиторий BookRepositoryJPA должен")
 @DataJpaTest
-@Import(BookRepositoryJPAImpl.class)
+@Import({BookAuthorRepositoryJPAImpl.class ,BookRepositoryJPAImpl.class})
 class BookRepositoryJPAImplTest {
 
     private final Long FIRST_BOOK_ID = 1L;

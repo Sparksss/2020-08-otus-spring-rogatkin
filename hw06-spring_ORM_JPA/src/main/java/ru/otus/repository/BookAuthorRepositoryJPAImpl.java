@@ -12,13 +12,13 @@ import javax.persistence.PersistenceContext;
  * @author Ilya Rogatkin
  */
 @Repository
-public class BookAuthorRepositoryRepositoryJPAImpl implements BookAuthorRepositoryJPA {
+public class BookAuthorRepositoryJPAImpl implements BookAuthorRepositoryJPA {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    public BookAuthorRepositoryRepositoryJPAImpl(EntityManager entityManager) {
+    public BookAuthorRepositoryJPAImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
