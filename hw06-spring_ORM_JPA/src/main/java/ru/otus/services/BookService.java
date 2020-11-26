@@ -18,4 +18,5 @@ public interface BookService {
     Long getCountBooks();
     List<Book> getBooksByAuthor(long authorId) throws Exception;
     List<Book> getBooksByGenre(long genreId) throws Exception;
+    void addCommentToBook(long bookId, String commentText) throws Exception;
 }

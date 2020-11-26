@@ -3,14 +3,8 @@ package ru.otus.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.dto.BookDto;
-import ru.otus.models.Author;
-import ru.otus.models.Book;
-import ru.otus.models.BookAuthor;
-import ru.otus.models.Genre;
-import ru.otus.repository.AuthorRepositoryJPA;
-import ru.otus.repository.BookAuthorRepositoryJPA;
-import ru.otus.repository.BookRepositoryJPA;
-import ru.otus.repository.GenreRepositoryJPA;
+import ru.otus.models.*;
+import ru.otus.repository.*;
 
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -26,16 +20,22 @@ public class BookServiceImpl implements BookService {
     private GenreRepositoryJPA genreRepositoryJPA;
     private BookAuthorRepositoryJPA bookAuthorRepositoryJPA;
     private AuthorRepositoryJPA authorRepositoryJPA;
+    private CommentRepositoryJPA commentRepositoryJPA;
+    private BookCommentRepositoryJPA bookCommentRepositoryJPA;
 
     @Autowired
     public BookServiceImpl(BookRepositoryJPA bookRepositoryJPA,
                            GenreRepositoryJPA genreRepositoryJPA,
                            BookAuthorRepositoryJPA bookAuthorRepositoryJPA,
-                           AuthorRepositoryJPA authorRepositoryJPA) {
+                           AuthorRepositoryJPA authorRepositoryJPA,
+                           CommentRepositoryJPA commentRepositoryJPA,
+                           BookCommentRepositoryJPA bookCommentRepositoryJPA) {
         this.bookRepository = bookRepositoryJPA;
         this.genreRepositoryJPA = genreRepositoryJPA;
         this.bookAuthorRepositoryJPA = bookAuthorRepositoryJPA;
         this.authorRepositoryJPA = authorRepositoryJPA;
+        this.commentRepositoryJPA = commentRepositoryJPA;
+        this.bookCommentRepositoryJPA = bookCommentRepositoryJPA;
     }
 
     @Transactional
@@ -80,8 +80,9 @@ public class BookServiceImpl implements BookService {
         if(id == 0) throw new Exception("Wrong parameter id");
         Book book = this.bookRepository.findById(id);
         if(book == null) throw new Exception(String.format("%s%d%s", "Book with id: ", id, "does not exists"));
-        List<Author> bookAuthors = this.authorRepositoryJPA.getAllAuthorsByBookId(book.getId());
-        BookDto bookDto = new BookDto(book.getId(), book.getName(), book.getGenre(), bookAuthors);
+        List<Author> bookAuthors = this.authorRepositoryJPA.getAllAuthorsByBookId(id);
+        List<Comment> bookComments = this.commentRepositoryJPA.findAllBookComment(id);
+        BookDto bookDto = new BookDto(book.getId(), book.getName(), book.getGenre(), bookAuthors, bookComments);
         return bookDto;
     }
 
@@ -103,6 +104,17 @@ public class BookServiceImpl implements BookService {
     public List<Book> getBooksByGenre(long genreId) throws Exception {
         if(genreId == 0) throw new Exception("Wrong genre id");
         return this.bookRepository.findAllByGenre(genreId);
+    }
+
+    @Transactional
+    @Override
+    public void addCommentToBook(long bookId, String commentText) throws Exception {
+        if(!this.isCorrectValue(commentText)) throw new Exception("Wrong text comment");
+        if(bookId == 0) throw new Exception("Wrong book id");
+        Comment comment = new Comment(commentText);
+        comment = this.commentRepositoryJPA.save(comment);
+        BookComment bookComment = new BookComment(bookId, comment.getId());
+        this.bookCommentRepositoryJPA.save(bookComment);
     }
 
     private boolean isCorrectValue(String value) {
