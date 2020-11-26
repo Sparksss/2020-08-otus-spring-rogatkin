@@ -12,4 +12,5 @@ public interface BookShell {
     void findByAuthor(long authorId);
     void findByGenre(long genreId);
     void addAuthorToBook(long bookId, long authorId);
+    void addCommentToBook(long bookId, String commentText);
 }

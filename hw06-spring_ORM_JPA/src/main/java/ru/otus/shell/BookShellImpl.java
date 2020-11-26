@@ -102,12 +102,22 @@ public class BookShellImpl implements BookShell {
 
     @ShellMethod(value = "add author to book", key = {"add_author_to_book"})
     @Override
-    public void addAuthorToBook(long bookId, long authorId) {
+    public void addAuthorToBook(@ShellOption long bookId,@ShellOption long authorId) {
         try {
             this.bookService.addAuthorToBook(bookId, authorId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    @ShellMethod(value = "add new comment to book", key = {"add_comment_to_book"})
+    @Override
+    public void addCommentToBook(@ShellOption long bookId, @ShellOption String commentText) {
+        try {
+            this.bookService.addCommentToBook(bookId, commentText);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
