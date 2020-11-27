@@ -36,3 +36,7 @@ build
 *.ipr
 *.idea
 .gitattributes
+.ideaDataSources
+.ideaDataSources/*
+dataSources/
+dataSources/*
