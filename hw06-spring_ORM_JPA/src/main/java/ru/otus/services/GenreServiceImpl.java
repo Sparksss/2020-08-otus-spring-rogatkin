@@ -70,6 +70,11 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void delete(long id) throws Exception {
         if(id == 0) throw new Exception("Wrong parameter genreId");
-        this.genreRepositoryJPA.delete(id);
+        Genre genre = this.genreRepositoryJPA.findById(id);
+        if(genre != null) {
+            this.genreRepositoryJPA.delete(genre);
+        } else {
+            throw new Exception("Genre with id " + id + "not found");
+        }
     }
 }

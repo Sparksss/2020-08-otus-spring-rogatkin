@@ -22,11 +22,7 @@ CREATE TABLE books_authors (
 
 CREATE TABLE comments (
     id bigserial primary key,
+    book_id bigserial references books(id),
     comment text
 );
 
-CREATE TABLE books_comments (
-    id bigserial primary key,
-    book_id bigserial references books(id) ON DELETE CASCADE,
-    comment_id bigserial references comments(id) ON DELETE CASCADE
-);

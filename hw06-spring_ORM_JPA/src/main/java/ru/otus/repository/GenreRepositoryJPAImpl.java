@@ -42,10 +42,8 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
     }
 
     @Override
-    public void delete(long id) {
-        Query query = this.entityManager.createQuery("delete from Genre g where g.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void delete(Genre genre) {
+        this.entityManager.remove(genre);
     }
 
     @Override

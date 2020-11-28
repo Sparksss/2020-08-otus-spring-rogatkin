@@ -47,7 +47,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void delete(long id) throws Exception {
         if(id == 0) throw new Exception("Wrong id");
-        this.authorRepositoryJPA.delete(id);
+        Author author = this.authorRepositoryJPA.findById(id);
+        if (author != null) {
+            this.authorRepositoryJPA.delete(author);
+        } else {
+            throw new Exception("Author with id" + id + "not found");
+        }
     }
 
     @Transactional(readOnly = true)

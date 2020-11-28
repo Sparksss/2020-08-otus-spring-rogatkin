@@ -3,6 +3,8 @@ package ru.otus.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ilya on Oct, 2020
@@ -12,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "authors")
+@Builder
 public class Author {
 
     @Id
@@ -21,6 +24,9 @@ public class Author {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany(mappedBy = "authors")
+    private List<Book> books = new ArrayList<>();
 
     public Author(String name) {
         this.name = name;

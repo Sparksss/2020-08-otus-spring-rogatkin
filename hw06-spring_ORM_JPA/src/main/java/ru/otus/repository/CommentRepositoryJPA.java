@@ -10,7 +10,6 @@ import java.util.List;
  */
 public interface CommentRepositoryJPA {
     Comment save(Comment comment);
-    void delete(long id);
+    void delete(Comment comment);
     Comment findById(long id);
-    List<Comment> findAllBookComment(long bookId);
 }

@@ -69,53 +69,8 @@ public class BookShellImpl implements BookShell {
     @Override
     public void findById(@ShellOption long id) {
         try {
-            BookDto book = this.bookService.findById(id);
+            Book book = this.bookService.findById(id);
             System.out.println(book);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @ShellMethod(value = "find books by author", key = {"find_book_by_author"})
-    @Override
-    public void findByAuthor(@ShellOption long authorId) {
-        try {
-            for(Book book : this.bookService.getBooksByAuthor(authorId)) {
-                System.out.println(book);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @ShellMethod(value = "find books by genre", key = {"find_book_by_genre"})
-    @Override
-    public void findByGenre(@ShellOption long genreId) {
-        try {
-            for(Book book : this.bookService.getBooksByGenre(genreId)) {
-                System.out.println(book);
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    @ShellMethod(value = "add author to book", key = {"add_author_to_book"})
-    @Override
-    public void addAuthorToBook(@ShellOption long bookId,@ShellOption long authorId) {
-        try {
-            this.bookService.addAuthorToBook(bookId, authorId);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    @ShellMethod(value = "add new comment to book", key = {"add_comment_to_book"})
-    @Override
-    public void addCommentToBook(@ShellOption long bookId, @ShellOption String commentText) {
-        try {
-            this.bookService.addCommentToBook(bookId, commentText);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

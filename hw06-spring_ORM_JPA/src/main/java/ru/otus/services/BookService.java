@@ -11,12 +11,8 @@ import java.util.List;
  */
 public interface BookService {
     void addBook(String bookName, String genreName) throws Exception;
-    void addAuthorToBook(long bookId, long authorId) throws Exception;
     void update(long bookId, String bookName) throws Exception;
     List<Book> findAll();
-    BookDto findById(long id) throws Exception;
+    Book findById(long id) throws Exception;
     Long getCountBooks();
-    List<Book> getBooksByAuthor(long authorId) throws Exception;
-    List<Book> getBooksByGenre(long genreId) throws Exception;
-    void addCommentToBook(long bookId, String commentText) throws Exception;
 }

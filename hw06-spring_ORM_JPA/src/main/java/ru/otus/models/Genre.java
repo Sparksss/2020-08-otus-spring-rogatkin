@@ -1,5 +1,6 @@
 package ru.otus.models;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "genres")
+@Builder
 public class Genre {
 
     @Id

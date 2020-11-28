@@ -39,16 +39,7 @@ public class CommentRepositoryJPAImpl implements CommentRepositoryJPA {
     }
 
     @Override
-    public void delete(long id) {
-        Query query = this.entityManager.createQuery("delete from Comment c where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
-    }
-
-    @Override
-    public List<Comment> findAllBookComment(long bookId) {
-        TypedQuery<Comment> query = this.entityManager.createQuery("select c from Comment c inner join BookComment bk on c.id = bk.commentId where bk.bookId = :book_id", Comment.class);
-        query.setParameter("book_id", bookId);
-        return query.getResultList();
+    public void delete(Comment comment) {
+        this.entityManager.remove(comment);
     }
 }

@@ -11,9 +11,8 @@ import java.util.List;
 public interface AuthorRepositoryJPA {
     Long countAll();
     Author save(Author author);
-    void delete(long id);
+    void delete(Author author);
     Author findById(long id);
     Author findByName(String name);
     List<Author> getAll();
-    List<Author> getAllAuthorsByBookId(long bookId);
 }

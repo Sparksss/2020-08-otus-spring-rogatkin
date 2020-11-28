@@ -24,6 +24,10 @@ public class Comment {
     @Column(name = "comment")
     private String comment;
 
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
+    private Book book;
+
     public Comment(String comment) {
         this.comment = comment;
     }

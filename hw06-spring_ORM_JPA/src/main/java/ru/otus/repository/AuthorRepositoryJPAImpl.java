@@ -43,10 +43,8 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
 
     @Override
-    public void delete(long id) {
-        Query query = entityManager.createQuery("delete from Author a where a.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void delete(Author author) {
+        this.entityManager.remove(author);
     }
 
     @Override
@@ -64,12 +62,5 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
     @Override
     public List<Author> getAll() {
         return entityManager.createQuery("select a from Author a", Author.class).getResultList();
-    }
-
-    @Override
-    public List<Author> getAllAuthorsByBookId(long bookId) {
-        TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a inner join BookAuthor ba on a.id = ba.authorId WHERE ba.bookId = :book_id", Author.class);
-        query.setParameter("book_id", bookId);
-        return query.getResultList();
     }
 }
