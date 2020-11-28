@@ -26,6 +26,9 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "genre")
+    private List<Book> books = new ArrayList<>();
+
     public Genre(String name) {
         this.name = name;
     }

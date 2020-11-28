@@ -25,7 +25,7 @@ public class Comment {
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id")
     private Book book;
 
     public Comment(String comment) {
