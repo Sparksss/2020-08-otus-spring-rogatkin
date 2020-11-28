@@ -1,9 +1,7 @@
 package ru.otus.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.dto.BookDto;
 import ru.otus.models.*;
 import ru.otus.repository.*;
 

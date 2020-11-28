@@ -1,6 +1,5 @@
 package ru.otus.services;
 
-import ru.otus.dto.BookDto;
 import ru.otus.models.Book;
 
 import java.util.List;
