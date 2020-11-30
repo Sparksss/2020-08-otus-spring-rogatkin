@@ -21,7 +21,7 @@ public class Comment {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "comment")
+    @Column(name = "comment", nullable = false)
     private String comment;
 
     public Comment(String comment) {

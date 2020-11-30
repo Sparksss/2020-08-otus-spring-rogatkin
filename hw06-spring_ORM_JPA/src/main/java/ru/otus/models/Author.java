@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "authors")
-@Builder
 public class Author {
 
     @Id
@@ -22,7 +21,7 @@ public class Author {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     public Author(String name) {
