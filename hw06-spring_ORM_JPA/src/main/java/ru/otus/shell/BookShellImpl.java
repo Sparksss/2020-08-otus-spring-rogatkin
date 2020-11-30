@@ -9,6 +9,7 @@ import ru.otus.services.BookService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 /*
  * @created 14/11 - otus-spring
@@ -18,6 +19,8 @@ import java.util.List;
 public class BookShellImpl implements BookShell {
 
     private BookService bookService;
+
+    private static Logger logger = Logger.getLogger("BookLogger");
 
     @Autowired
     public BookShellImpl(BookService bookService) {
@@ -31,12 +34,11 @@ public class BookShellImpl implements BookShell {
         try {
             books = bookService.findAll();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.getStackTrace();
+            logger.warning(e.getMessage());
         }
 
         if(books.size() == 0) {
-            System.out.println("Book bot found in library");
+            System.out.println("Book not found in library");
         } else {
             for(Book book : books) {
                 System.out.println(book);
@@ -50,7 +52,7 @@ public class BookShellImpl implements BookShell {
         try {
             this.bookService.addBook(bookName, genreName);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warning(e.getMessage());
         }
     }
 
@@ -60,7 +62,7 @@ public class BookShellImpl implements BookShell {
         try {
             this.bookService.update(bookId, bookName);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warning(e.getMessage());
         }
     }
 
@@ -71,7 +73,17 @@ public class BookShellImpl implements BookShell {
             Book book = this.bookService.findById(id);
             System.out.println(book);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.warning(e.getMessage());
+        }
+    }
+
+    @ShellMethod(value = "add list authors to book", key = {"add_authors_to_book"})
+    @Override
+    public void addAuthorToBook(@ShellOption long authorId, @ShellOption long bookId) {
+        try {
+            this.bookService.addAuthorToBook(authorId, bookId);
+        } catch (Exception e) {
+            logger.warning(e.getMessage());
         }
     }
 }

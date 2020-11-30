@@ -66,10 +66,4 @@ class AuthorRepositoryJPAImplTest {
         assertThat(authors).isNotNull();
         assertEquals(authors.size(), INITIAL_COUNT_AUTHORS);
     }
-
-    @DisplayName("Получать список авторов по ID книги")
-    @Test
-    public void getAllAuthorsByBookId() {
-
-    }
 }

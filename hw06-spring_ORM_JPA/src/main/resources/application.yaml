@@ -1,5 +1,8 @@
 server:
   port: 8080
+logging:
+  level:
+    org.springframework.web: debug
 spring:
   datasource:
     platform: postgres

@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.otus.models.Book;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 
 @Repository
@@ -45,7 +42,10 @@ public class BookRepositoryJPAImpl implements BookRepositoryJPA {
 
     @Override
     public List<Book> findAll() {
-        return em.createQuery("select b from Book b", Book.class).getResultList();
+        EntityGraph<?> entityGraph = this.em.getEntityGraph("authors-entity-graph");
+        TypedQuery<Book> query = this.em.createQuery("select b from Book b join fetch b.genre", Book.class);
+        query.setHint("javax.persistence.fetchgraph", entityGraph);
+        return query.getResultList();
     }
 
     @Override

@@ -5,7 +5,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ilya on Oct, 2020
@@ -14,6 +16,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name = "books")
+@NamedEntityGraph(name = "authors-entity-graph",
+    attributeNodes = {@NamedAttributeNode("authors")})
 public class Book {
 
     @Id
@@ -32,7 +36,7 @@ public class Book {
     @JoinTable(name = "books_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<Author> authors = new ArrayList<>();
+    private Set<Author> authors = new HashSet<>();
 
     @OneToMany(mappedBy = "book")
     private List<Comment> comments = new ArrayList<>();

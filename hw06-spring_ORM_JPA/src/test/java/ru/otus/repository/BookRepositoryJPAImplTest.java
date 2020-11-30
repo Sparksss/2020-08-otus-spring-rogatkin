@@ -19,15 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Репозиторий BookRepositoryJPA должен")
 @DataJpaTest
-@Import({BookAuthorRepositoryJPAImpl.class ,BookRepositoryJPAImpl.class})
+@Import({BookRepositoryJPAImpl.class})
 class BookRepositoryJPAImplTest {
 
     private final Long FIRST_BOOK_ID = 1L;
     private final String BOOK_NAME = "The Captains Daughter";
     private final Long INITIAL_COUNT_BOOKS = 1L;
-    private final Long FIRST_ID_AUTHOR = 1L;
-    private final Long ID_GENRE = 3L;
-    private final String NAME_GENRE = "Novel";
 
 
     @Autowired
@@ -53,28 +50,6 @@ class BookRepositoryJPAImplTest {
         List<Book> books = this.bookRepositoryJPA.findAll();
         assertThat(books).isNotNull();
         assertEquals(books.size(), INITIAL_COUNT_BOOKS);
-    }
-
-    @DisplayName("Находить все книги, у которых есть заданный автор")
-    @Test
-    public void findAllByAuthor() {
-        List<Book> books = this.bookRepositoryJPA.findAllByAuthor(FIRST_ID_AUTHOR);
-        assertThat(books).isNotNull();
-    }
-
-    @DisplayName("Находить все книги определённого жанра")
-    @Test
-    public void findAllByGenre() {
-
-        Condition<Book> mvpBook = new Condition<Book>() {
-                @Override
-                public boolean matches(Book book) {
-                    return book.getGenre().getId() == ID_GENRE && book.getGenre().getName().equals(NAME_GENRE);
-                }
-        };
-
-        List<Book> books = this.bookRepositoryJPA.findAllByGenre(ID_GENRE);
-        assertThat(books).filteredOn(mvpBook);
     }
 
     @DisplayName("Получать общее количество книг")

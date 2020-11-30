@@ -14,4 +14,5 @@ public interface BookService {
     List<Book> findAll();
     Book findById(long id) throws Exception;
     Long getCountBooks();
+    void addAuthorToBook(long authorId, long bookId) throws Exception;
 }
