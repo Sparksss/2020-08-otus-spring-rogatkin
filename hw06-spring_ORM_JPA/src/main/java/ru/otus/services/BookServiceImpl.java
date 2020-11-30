@@ -41,6 +41,7 @@ public class BookServiceImpl implements BookService {
         if(bookName == null || bookName.isEmpty()) throw new Exception("Wrong parameter bookName");
         Book book = this.bookRepository.findById(bookId);
         book.setName(bookName);
+        this.bookRepository.save(book);
     }
 
     @Transactional(readOnly = true)
