@@ -27,11 +27,6 @@ CREATE TABLE books_authors (
 
 CREATE TABLE comments (
     id int8 auto_increment,
+    book_id int8 references books(id),
     comment text
-);
-
-CREATE TABLE books_comments (
-    id int8 auto_increment,
-    book_id int8 references books(id) ON DELETE CASCADE,
-    comment_id int8 references comments(id) ON DELETE CASCADE
 );
