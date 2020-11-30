@@ -60,6 +60,6 @@ public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @Override
     public List<Author> getAll() {
-        return entityManager.createQuery("select a from Author a join fetch a.books", Author.class).getResultList();
+        return entityManager.createQuery("select a from Author a", Author.class).getResultList();
     }
 }
