@@ -18,8 +18,6 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @Table(name = "books")
-@NamedEntityGraph(name = "authors-entity-graph",
-    attributeNodes = {@NamedAttributeNode("authors")})
 public class Book {
 
     @Id
@@ -34,15 +32,18 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "book_id")
+    private List<Comment> comments = new ArrayList<>();
+
+    @Fetch(FetchMode.SUBSELECT)
     @ManyToMany(targetEntity = Author.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "books_authors",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "book_id")
-    private List<Comment> comments = new ArrayList<>();
 
     public Book(String name) {
         this.name = name;
