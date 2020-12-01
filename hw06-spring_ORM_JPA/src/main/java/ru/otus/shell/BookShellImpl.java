@@ -30,19 +30,18 @@ public class BookShellImpl implements BookShell {
     @ShellMethod(value = "find all books", key = {"all_books"})
     @Override
     public void all() {
-        List<Book> books = new ArrayList<>();
         try {
-            books = bookService.findAll();
+            List<Book> books = bookService.findAll();
+        List<Book> books = new ArrayList<>();
+            if(books.size() > 0) {
+                for(Book book : books) {
+                    System.out.println(book);
+                }
+            } else {
+                System.out.println("Book not found in library");
+            }
         } catch (Exception e) {
             logger.warning(e.getMessage());
-        }
-
-        if(books.size() == 0) {
-            System.out.println("Book not found in library");
-        } else {
-            for(Book book : books) {
-                System.out.println(book);
-            }
         }
     }
 
