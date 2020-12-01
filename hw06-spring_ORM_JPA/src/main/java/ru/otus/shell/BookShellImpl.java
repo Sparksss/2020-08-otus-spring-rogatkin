@@ -32,7 +32,6 @@ public class BookShellImpl implements BookShell {
     public void all() {
         try {
             List<Book> books = bookService.findAll();
-        List<Book> books = new ArrayList<>();
             if(books.size() > 0) {
                 for(Book book : books) {
                     System.out.println(book);
