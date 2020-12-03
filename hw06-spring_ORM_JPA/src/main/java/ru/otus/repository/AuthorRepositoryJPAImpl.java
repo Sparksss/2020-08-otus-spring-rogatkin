@@ -17,7 +17,7 @@ import java.util.List;
 public class AuthorRepositoryJPAImpl implements AuthorRepositoryJPA {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     @Autowired
     public AuthorRepositoryJPAImpl(EntityManager entityManager) {

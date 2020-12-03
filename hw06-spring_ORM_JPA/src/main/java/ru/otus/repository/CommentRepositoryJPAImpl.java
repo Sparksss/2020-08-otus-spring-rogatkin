@@ -17,7 +17,7 @@ import java.util.List;
 public class CommentRepositoryJPAImpl implements CommentRepositoryJPA {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public CommentRepositoryJPAImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

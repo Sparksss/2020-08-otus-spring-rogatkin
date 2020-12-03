@@ -17,7 +17,7 @@ import java.util.List;
 public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public GenreRepositoryJPAImpl(EntityManager entityManager) {
         this.entityManager = entityManager;

@@ -11,7 +11,7 @@ import java.util.List;
 public class BookRepositoryJPAImpl implements BookRepositoryJPA {
 
     @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
     @Autowired
     public BookRepositoryJPAImpl(EntityManager em) {
