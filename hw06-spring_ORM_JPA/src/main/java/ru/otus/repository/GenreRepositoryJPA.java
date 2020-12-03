@@ -10,7 +10,6 @@ import java.util.List;
  */
 public interface GenreRepositoryJPA {
     Genre save(Genre genre);
-    void updateById(String name, long id);
     void delete(Genre genre);
     Genre findById(long id);
     Genre findByName(String name);

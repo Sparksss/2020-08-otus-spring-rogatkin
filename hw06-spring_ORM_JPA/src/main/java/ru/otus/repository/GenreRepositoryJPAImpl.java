@@ -34,14 +34,6 @@ public class GenreRepositoryJPAImpl implements GenreRepositoryJPA {
     }
 
     @Override
-    public void updateById(String name, long id) {
-        Query query = entityManager.createQuery("update Genre g set g.name = :name where g.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("name", name);
-        query.executeUpdate();
-    }
-
-    @Override
     public void delete(Genre genre) {
         this.entityManager.remove(genre);
     }
