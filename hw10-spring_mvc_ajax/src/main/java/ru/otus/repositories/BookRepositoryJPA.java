@@ -16,4 +16,5 @@ public interface BookRepositoryJPA extends CrudRepository<Book, Long> {
     List<Book> findAll();
     void delete(Book book);
     long count();
+    boolean existsById(long id);
 }

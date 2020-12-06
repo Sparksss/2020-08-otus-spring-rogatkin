@@ -11,8 +11,8 @@ import java.util.List;
  * @author Ilya Rogatkin
  */
 public interface BookService {
-    Book addBook(Book book) throws ValidateException;
-    void update(Book book) throws ValidateException, NotFoundException;
+    Book addBook(Book book) throws ValidateException, NotFoundException;
+    Book update(Book book) throws ValidateException, NotFoundException;
     List<Book> findAll();
     Book findById(long id) throws ValidateException, NotFoundException;
     Long getCountBooks();
