@@ -1,6 +1,8 @@
 package ru.otus.services;
 
 import ru.otus.entities.Author;
+import ru.otus.exceptions.NotFoundException;
+import ru.otus.exceptions.ValidateException;
 
 import java.util.List;
 
@@ -9,9 +11,9 @@ import java.util.List;
  * @author Ilya Rogatkin
  */
 public interface AuthorService {
-    void save(String authorName) throws Exception;
-    void update(long id, String authorName) throws Exception;
-    void delete(long id) throws Exception;
+    void save(String authorName) throws ValidateException;
+    void update(long id, String authorName) throws NotFoundException;
+    void delete(long id) throws NotFoundException, ValidateException;
     List<Author> findAll();
-    Author findById(long id) throws Exception;
+    Author findById(long id) throws ValidateException;
 }
