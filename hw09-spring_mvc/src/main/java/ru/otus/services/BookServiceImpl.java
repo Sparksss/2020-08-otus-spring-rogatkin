@@ -5,12 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.entities.Author;
 import ru.otus.entities.Book;
-import ru.otus.entities.Genre;
 import ru.otus.exceptions.NotFoundException;
 import ru.otus.exceptions.ValidateException;
 import ru.otus.repositories.AuthorRepositoryJPA;
 import ru.otus.repositories.BookRepositoryJPA;
-import ru.otus.repositories.GenreRepositoryJPA;
 
 import java.util.HashSet;
 import java.util.List;
