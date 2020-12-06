@@ -5,3 +5,5 @@ include 'hw03-spring-boot'
 include 'hw04-spring_shell'
 include 'hw05-spring_jdbc'
 include 'hw06-spring_ORM_JPA'
+include 'hw10-spring_mvc_ajax'
+
