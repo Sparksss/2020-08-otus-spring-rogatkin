@@ -1,68 +1,20 @@
 package ru.otus.controllers;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.otus.entities.Book;
-import ru.otus.entities.Genre;
-import ru.otus.services.BookService;
-import ru.otus.services.GenreService;
-
-import java.util.List;
+import ru.otus.exceptions.NotFoundException;
+import ru.otus.exceptions.ValidateException;
 
 /*
- * @created 05/12 - otus-spring
+ * @created 06/12 - otus-spring
  * @author Ilya Rogatkin
  */
-@RequiredArgsConstructor
-@Controller
-public class BookController {
-
-    private final BookService bookService;
-    private final GenreService genreService;
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String viewBook(Model model) throws Exception {
-        List<Book> books = this.bookService.findAll();
-        model.addAttribute("books", books);
-        return "list";
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public String addBookPage(Model model) {
-        List<Genre> genres = this.genreService.findAll();
-        model.addAttribute("genres", genres);
-        return "add";
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public RedirectView addBook(Book book) throws Exception {
-        this.bookService.addBook(book);
-        return new RedirectView("/");
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
-    public String editPage(@RequestParam(value = "id") long id, Model model) throws Exception {
-        Book book = this.bookService.findById(id);
-        List<Genre> genres = this.genreService.findAll();
-        model.addAttribute("book", book);
-        model.addAttribute("genres", genres);
-        return "edit";
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public RedirectView editBook(Book book) throws Exception {
-        this.bookService.update(book);
-        return new RedirectView("/");
-    }
-
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
-    public RedirectView deleteBook(Book book) throws Exception {
-        this.bookService.delete(book);
-        return new RedirectView("/");
-    }
+public interface BookController {
+    public String viewBooks(Model model);
+    public String addBookPage(Model model);
+    public RedirectView addBook(Book book) throws ValidateException;
+    public String editBookPage(long id, Model model) throws ValidateException, NotFoundException;
+    public RedirectView editBook(Book book) throws ValidateException, NotFoundException;
+    public RedirectView deleteBook(Book book) throws ValidateException, NotFoundException;
 }

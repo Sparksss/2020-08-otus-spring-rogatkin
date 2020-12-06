@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Ilya Rogatkin
  */
 @DisplayName("Контроллер BookController должен")
-@WebMvcTest(BookController.class)
-class BookControllerTest {
+@WebMvcTest(BookControllerImpl.class)
+class BookControllerImplTest {
 
     @Autowired
     private MockMvc mockMvc;
