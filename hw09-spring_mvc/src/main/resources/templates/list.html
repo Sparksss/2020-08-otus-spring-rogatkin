@@ -7,8 +7,8 @@
 </head>
 <body>
 <div class="container">
-    <h1>Books <span class="badge badge-secondary">All</span></h1>
-
+    <h1>Books <span class="badge badge-secondary">Store</span></h1>
+    <a class="btn btn-primary" th:href="@{/add}" href="add.html">Add new book</a>
     <table class="table">
         <thead>
         <tr>
@@ -16,18 +16,22 @@
             <th scope="col">Name</th>
             <th scope="col">Genre</th>
             <th scope="col">Edit book link</th>
+            <th scope="col">Delete book from store</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="book : ${books}">
             <td th:text="${book.id}">1</td>
             <td th:text="${book.name}">John Doe</td>
-            <td>
-                <div th:text="${'Genre id: ' + book.genre.id}"></div>
-                <div th:text="${'Genre name: ' + book.genre.name}"></div>
+            <td th:object="${book.genre}">
+                <div th:text="*{'Genre id: ' + id}"></div>
+                <div th:text="*{'Genre name: ' + name}"></div>
             </td>
             <td>
                 <a th:href="@{/edit(id=${book.id})}" href="edit.html">Edit</a>
+            </td>
+            <td>
+                <a th:href="@{/delete(id=${book.id})}" href="delete.html">Delete</a>
             </td>
         </tr>
         </tbody>
