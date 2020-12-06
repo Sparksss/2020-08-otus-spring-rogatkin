@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.otus.entities.Book;
@@ -33,6 +32,19 @@ public class BookController {
         return "list";
     }
 
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String addBookPage(Model model) {
+        List<Genre> genres = this.genreService.findAll();
+        model.addAttribute("genres", genres);
+        return "add";
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public RedirectView addBook(Book book) throws Exception {
+        this.bookService.addBook(book);
+        return new RedirectView("/");
+    }
+
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
     public String editPage(@RequestParam(value = "id") long id, Model model) throws Exception {
         Book book = this.bookService.findById(id);
@@ -45,6 +57,12 @@ public class BookController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public RedirectView editBook(Book book) throws Exception {
         this.bookService.update(book);
+        return new RedirectView("/");
+    }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public RedirectView deleteBook(Book book) throws Exception {
+        this.bookService.delete(book);
         return new RedirectView("/");
     }
 }
