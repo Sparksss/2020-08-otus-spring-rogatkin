@@ -1,5 +1,7 @@
-package ru.otus.entyties;
+package ru.otus.entities;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,25 +12,21 @@ import javax.persistence.*;
  * @author Ilya Rogatkin
  */
 @Data
-@NoArgsConstructor
 @Entity
-@Table(name = "genres")
-public class Genre {
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "authors")
+public class Author {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Genre(String name) {
-        this.name = name;
-    }
-
-    public Genre(long id, String name) {
-        this.id = id;
+    public Author(String name) {
         this.name = name;
     }
 }

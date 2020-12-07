@@ -1,4 +1,4 @@
-package ru.otus.entyties;
+package ru.otus.entities;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
