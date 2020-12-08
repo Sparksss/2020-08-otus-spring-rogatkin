@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.entities.Genre;
-import ru.otus.repositories.GenreRepositoryJPA;
+import ru.otus.services.GenreService;
 
 import java.util.List;
 
@@ -15,10 +15,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class GenreControllerImpl {
-    private final GenreRepositoryJPA genreRepositoryJPA;
+
+    private final GenreService genreService;
 
     @GetMapping(value = "/genre")
     public List<Genre> getGenres() {
-        return this.genreRepositoryJPA.findAll();
+        return this.genreService.findAll();
     }
 }
