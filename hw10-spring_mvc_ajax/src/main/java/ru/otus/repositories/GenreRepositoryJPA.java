@@ -9,4 +9,6 @@ import java.util.List;
  * @created 05/12 - otus-spring
  * @author Ilya Rogatkin
  */
-public interface GenreRepositoryJPA extends CrudRepository<Genre, Long> {}
+public interface GenreRepositoryJPA extends CrudRepository<Genre, Long> {
+    Genre findByName(String name);
+}
