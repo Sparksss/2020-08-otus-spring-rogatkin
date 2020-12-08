@@ -4,6 +4,8 @@ logging:
   level:
     org.springframework.web: debug
 spring:
+  main:
+    banner-mode: "off"
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/test
