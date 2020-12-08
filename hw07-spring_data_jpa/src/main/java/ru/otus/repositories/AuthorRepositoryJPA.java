@@ -10,10 +10,5 @@ import java.util.List;
  * @author Ilya Rogatkin
  */
 public interface AuthorRepositoryJPA extends CrudRepository<Author, Long> {
-    long count();
-    Author save(Author author);
-    void delete(Author author);
-    Author findById(long id);
     Author findByName(String name);
-    List<Author> findAll();
 }

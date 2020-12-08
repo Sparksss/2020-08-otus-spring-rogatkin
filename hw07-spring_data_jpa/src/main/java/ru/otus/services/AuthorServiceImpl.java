@@ -6,6 +6,8 @@ import ru.otus.entities.Author;
 import ru.otus.repositories.AuthorRepositoryJPA;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -31,7 +33,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void update(long id, String authorName) throws Exception {
         if(id == 0) throw new Exception("id cannot be 0");
         if(this.isCorrectValue(authorName)) {
-            Author author = this.authorRepositoryJPA.findById(id);
+            Author author = this.authorRepositoryJPA.findById(id).get();
             author.setName(authorName);
             this.authorRepositoryJPA.save(author);
         } else {
@@ -43,7 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void delete(long id) throws Exception {
         if(id == 0) throw new Exception("Wrong id");
-        Author author = this.authorRepositoryJPA.findById(id);
+        Author author = this.authorRepositoryJPA.findById(id).get();
         if (author != null) {
             this.authorRepositoryJPA.delete(author);
         } else {
@@ -54,14 +56,16 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(readOnly = true)
     @Override
     public List<Author> findAll() {
-        return this.authorRepositoryJPA.findAll();
+        List<Author> authors = new ArrayList<>();
+        this.authorRepositoryJPA.findAll().forEach(authors::add);
+        return authors;
     }
 
     @Transactional(readOnly = true)
     @Override
     public Author findById(long id) throws Exception {
         if(id == 0) throw new Exception("Wrong id");
-        return this.authorRepositoryJPA.findById(id);
+        return this.authorRepositoryJPA.findById(id).get();
     }
 
     @Transactional(readOnly = true)

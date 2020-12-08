@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.otus.entities.Genre;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +39,8 @@ class GenreRepositoryJPATest {
     @DisplayName("Получать список жанров")
     @Test
     public void findAll() {
-        List<Genre> genres = this.genreRepositoryJPA.findAll();
+        List<Genre> genres = new ArrayList<>();
+        this.genreRepositoryJPA.findAll().forEach(genres::add);
         assertThat(genres).isNotNull();
         assertEquals(genres.size(), INITIAL_COUNT_GENRES);
     }

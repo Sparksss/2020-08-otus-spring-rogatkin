@@ -10,10 +10,5 @@ import java.util.List;
  * @author Ilya Rogatkin
  */
 public interface BookRepositoryJPA extends CrudRepository<Book, Long> {
-    Book save(Book book);
-    Book findById(long id);
     Book findByName(String name);
-    List<Book> findAll();
-    void delete(Book book);
-    long count();
 }

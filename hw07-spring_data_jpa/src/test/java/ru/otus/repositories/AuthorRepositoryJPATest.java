@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.otus.entities.Author;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,7 +38,8 @@ class AuthorRepositoryJPATest {
     @DisplayName("Получать список всех авторов")
     @Test
     public void getAllAuthors() {
-        List<Author> authors = this.authorRepositoryJPA.findAll();
+        List<Author> authors = new ArrayList<>();
+        this.authorRepositoryJPA.findAll().forEach(authors::add);
         assertThat(authors).isNotNull();
         assertEquals(authors.size(), INITIAL_COUNT_AUTHORS);
     }
@@ -46,7 +48,7 @@ class AuthorRepositoryJPATest {
     @DisplayName("Находить автора по ID")
     @Test
     public void findAuthorById() {
-        Author author = this.authorRepositoryJPA.findById(FIRST_ID);
+        Author author = this.authorRepositoryJPA.findById(FIRST_ID).get();
         assertThat(author).isNotNull();
     }
 

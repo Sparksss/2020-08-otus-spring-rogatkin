@@ -8,7 +8,5 @@ import ru.otus.entities.Comment;
  * @author Ilya Rogatkin
  */
 public interface CommentRepositoryJPA extends CrudRepository<Comment, Long> {
-    Comment save(Comment comment);
-    void delete(Comment comment);
-    Comment findById(long id);
+
 }

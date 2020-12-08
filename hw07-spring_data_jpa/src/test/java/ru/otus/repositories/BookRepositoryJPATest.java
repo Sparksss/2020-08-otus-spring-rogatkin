@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.otus.entities.Book;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,7 +48,8 @@ class BookRepositoryJPATest {
     @DisplayName("Получать все книги")
     @Test
     public void getAllBooks() {
-        List<Book> books = this.bookRepositoryJPA.findAll();
+        List<Book> books = new ArrayList<>();
+                this.bookRepositoryJPA.findAll().forEach(books::add);
         assertThat(books)
                 .isNotNull();
 
