@@ -12,6 +12,7 @@ import ru.otus.repositories.AuthorRepositoryJPA;
 import ru.otus.repositories.BookRepositoryJPA;
 import ru.otus.repositories.GenreRepositoryJPA;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class BookServiceImpl implements BookService {
         if(!this.isCorrectValue(book.getName())) throw new ValidateException("Please enter a book name");
         if(book.getGenre() == null) throw new ValidateException("Please select a genre");
         if(book.getGenre().getId() == 0) throw new ValidateException("Please select a genre");
-        Genre genre = this.genreRepositoryJPA.findById(book.getGenre().getId());
+        Genre genre = this.genreRepositoryJPA.findById(book.getGenre().getId()).get();
         if(genre == null) throw new NotFoundException("Genre with id: " + book.getId() + "not found");
         book.setGenre(genre);
         return this.bookRepository.save(book);
@@ -46,9 +47,6 @@ public class BookServiceImpl implements BookService {
         if(book.getId() == 0) throw new ValidateException("wrong parameter bookId");
         if(book.getName() == null || book.getName().isEmpty()) throw new ValidateException("Wrong parameter bookName");
         if(this.bookRepository.existsById(book.getId())) {
-           Book findBook = this.bookRepository.findById(book.getId());
-           findBook.setName(book.getName());
-           findBook.setGenre(book.getGenre());
            return this.bookRepository.save(book);
         } else {
             throw new NotFoundException("Book with id: " + book.getId() + "NotFound");
@@ -58,7 +56,9 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     @Override
     public List<Book> findAll() {
-        return this.bookRepository.findAll();
+        List<Book> books = new ArrayList<>();
+        this.bookRepository.findAll().forEach(books::add);
+        return books;
     }
 
     @Transactional(readOnly = true)
@@ -66,7 +66,7 @@ public class BookServiceImpl implements BookService {
     public Book findById(long id) throws ValidateException, NotFoundException {
         if(id == 0) throw new ValidateException("Wrong parameter id");
         if(this.bookRepository.existsById(id)) {
-            return this.bookRepository.findById(id);
+            return this.bookRepository.findById(id).get();
         } else {
             throw new NotFoundException(String.format("%s%d%s", "Book with id: ", id, "does not exists"));
         }
@@ -83,9 +83,9 @@ public class BookServiceImpl implements BookService {
     public void addAuthorToBook(long authorId, long bookId) throws ValidateException, NotFoundException {
         if(authorId == 0) throw new ValidateException("Wrong author id");
         if(bookId == 0) throw new ValidateException("Wrong book id");
-        Book book = this.bookRepository.findById(bookId);
+        Book book = this.bookRepository.findById(bookId).get();
         if(book == null) throw new NotFoundException("Book with id: " + bookId + "not found");
-        Author author = this.authorRepositoryJPA.findById(authorId);
+        Author author = this.authorRepositoryJPA.findById(authorId).get();
         if(author == null) throw new NotFoundException("Author with id: " + authorId + "not found");
         if(book.getAuthors() == null || book.getAuthors().isEmpty()) {
             Set<Author> authorSet = new HashSet<>();
@@ -99,14 +99,11 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public void delete(Book book) throws ValidateException {
-        if(book == null) throw new ValidateException("Book bot found");
-        if(book.getId() == 0) throw new ValidateException("Wrong id for book");
-        if(this.bookRepository.existsById(book.getId())) {
-            this.bookRepository.delete(book);
-        } else  {
-            throw new NotFoundException("Book does not exists");
-        }
+    public void delete(long bookId) throws ValidateException, NotFoundException {
+        if(bookId == 0) throw new ValidateException("Wrong book id");
+        Book book = this.bookRepository.findById(bookId).get();
+        if(book == null) throw new NotFoundException("Book with id: " + bookId + "not found");
+        this.bookRepository.delete(book);
     }
 
     private boolean isCorrectValue(String value) {

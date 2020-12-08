@@ -1,6 +1,8 @@
 package ru.otus.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.entities.Book;
 import ru.otus.exceptions.NotFoundException;
@@ -27,8 +29,7 @@ public class BookControllerImpl {
 
     @GetMapping(value = "/book/{id}")
     public Book getBookById(@PathVariable("id") long id) {
-        Book book = this.bookService.findById(id);
-        return book;
+        return this.bookService.findById(id);
     }
 
     @PostMapping(value = "/book")
@@ -41,8 +42,9 @@ public class BookControllerImpl {
         return this.bookService.update(book);
     }
 
-    @DeleteMapping(value = "/book")
-    public void deleteBook(@RequestBody Book book) throws ValidateException, NotFoundException {
-        this.bookService.delete(book);
+    @DeleteMapping(value = "/book/{id}")
+    public ResponseEntity deleteBookById(@PathVariable long id) throws ValidateException, NotFoundException {
+        this.bookService.delete(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

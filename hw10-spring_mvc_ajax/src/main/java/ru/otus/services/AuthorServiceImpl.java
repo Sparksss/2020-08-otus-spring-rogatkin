@@ -8,6 +8,7 @@ import ru.otus.exceptions.NotFoundException;
 import ru.otus.exceptions.ValidateException;
 import ru.otus.repositories.AuthorRepositoryJPA;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -37,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void update(long id, String authorName) throws NotFoundException {
         if(id == 0) throw new ValidateException("id cannot be 0");
         if(this.isCorrectValue(authorName)) {
-            Author author = this.authorRepositoryJPA.findById(id);
+            Author author = this.authorRepositoryJPA.findById(id).get();
             author.setName(authorName);
             this.authorRepositoryJPA.save(author);
         } else {
@@ -49,7 +50,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void delete(long id) throws NotFoundException, ValidateException{
         if(id == 0) throw new ValidateException("Wrong id");
-        Author author = this.authorRepositoryJPA.findById(id);
+        Author author = this.authorRepositoryJPA.findById(id).get();
         if (author != null) {
             this.authorRepositoryJPA.delete(author);
         } else {
@@ -60,14 +61,16 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional(readOnly = true)
     @Override
     public List<Author> findAll() {
-        return this.authorRepositoryJPA.findAll();
+        List<Author> authors = new ArrayList<>();
+        this.authorRepositoryJPA.findAll().forEach(authors::add);
+        return authors;
     }
 
     @Transactional(readOnly = true)
     @Override
     public Author findById(long id) throws ValidateException {
         if(id == 0) throw new ValidateException("Wrong id");
-        return this.authorRepositoryJPA.findById(id);
+        return this.authorRepositoryJPA.findById(id).get();
     }
 
     private boolean isCorrectValue(String value) {
