@@ -9,11 +9,4 @@ import java.util.List;
  * @created 05/12 - otus-spring
  * @author Ilya Rogatkin
  */
-public interface GenreRepositoryJPA extends CrudRepository<Genre, Long> {
-    Genre save(Genre genre);
-    void delete(Genre genre);
-    Genre findById(long id);
-    Genre findByName(String name);
-    List<Genre> findAll();
-    long count();
-}
+public interface GenreRepositoryJPA extends CrudRepository<Genre, Long> {}

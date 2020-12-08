@@ -9,12 +9,4 @@ import java.util.List;
  * @created 05/12 - otus-spring
  * @author Ilya Rogatkin
  */
-public interface BookRepositoryJPA extends CrudRepository<Book, Long> {
-    Book save(Book book);
-    Book findById(long id);
-    Book findByName(String name);
-    List<Book> findAll();
-    void delete(Book book);
-    long count();
-    boolean existsById(long id);
-}
+public interface BookRepositoryJPA extends CrudRepository<Book, Long> {}
