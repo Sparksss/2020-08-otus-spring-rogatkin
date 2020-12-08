@@ -17,5 +17,5 @@ public interface BookService {
     Book findById(long id) throws ValidateException, NotFoundException;
     Long getCountBooks();
     void addAuthorToBook(long authorId, long bookId) throws ValidateException, NotFoundException;
-    void delete(Book book) throws ValidateException;
+    void delete(long bookId) throws ValidateException, NotFoundException;
 }
