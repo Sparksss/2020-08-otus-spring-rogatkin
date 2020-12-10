@@ -6,7 +6,7 @@ spring:
     username: test
     password: 12345
     schema: migration/V1__initial_schema.sql
-    data: migration/V2_test-data.sql
+    data: migration/V2__test-data.sql
   flyway:
     enabled: false
   jpa:
