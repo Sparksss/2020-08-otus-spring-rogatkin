@@ -38,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
     public void update(long id, String authorName) throws NotFoundException {
         if(id == 0) throw new ValidateException("id cannot be 0");
         if(this.isCorrectValue(authorName)) {
-            Author author = this.authorRepositoryJPA.findById(id).get();
+            Author author = this.authorRepositoryJPA.findById(id).orElseThrow(() -> {throw new NotFoundException("Author with id: " + id + "Not found");});
             author.setName(authorName);
             this.authorRepositoryJPA.save(author);
         } else {
@@ -50,12 +50,8 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void delete(long id) throws NotFoundException, ValidateException{
         if(id == 0) throw new ValidateException("Wrong id");
-        Author author = this.authorRepositoryJPA.findById(id).get();
-        if (author != null) {
-            this.authorRepositoryJPA.delete(author);
-        } else {
-            throw new NotFoundException("Author with id" + id + "not found");
-        }
+        this.authorRepositoryJPA.findById(id)
+                .ifPresentOrElse(author -> authorRepositoryJPA.delete(author), () -> {throw new NotFoundException("Author with id" + id + "not found");});
     }
 
     @Transactional(readOnly = true)
@@ -70,7 +66,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author findById(long id) throws ValidateException {
         if(id == 0) throw new ValidateException("Wrong id");
-        return this.authorRepositoryJPA.findById(id).get();
+        return this.authorRepositoryJPA.findById(id).orElseThrow(() -> {throw new NotFoundException("Author with id: " + id + "Not found");});
     }
 
     private boolean isCorrectValue(String value) {

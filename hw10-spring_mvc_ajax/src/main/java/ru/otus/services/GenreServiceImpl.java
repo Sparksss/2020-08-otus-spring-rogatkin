@@ -37,15 +37,15 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public Genre findById(long id) throws ValidateException {
         if(id == 0) throw new ValidateException("Wrong parameter id");
-        return this.genreRepositoryJPA.findById(id).get();
+        return this.genreRepositoryJPA.findById(id).orElseThrow(() -> {throw new NotFoundException("Genre with id: " + id + "not found");});
     }
 
     @Transactional(readOnly = true)
     @Override
     public Genre getByName(String name) throws ValidateException, NotFoundException {
         if(name == null || name.isEmpty()) throw new ValidateException("Wrong name genre");
-        Genre genre = this.genreRepositoryJPA.findByName(name);
-        if(genre == null) throw new NotFoundException("Genre with name:" + name + "Not found");
+        Genre genre = this.genreRepositoryJPA.findByName(name)
+                .orElseThrow(() -> {throw new NotFoundException("Genre with name:" + name + "Not found");});
         return genre;
     }
 
@@ -68,8 +68,8 @@ public class GenreServiceImpl implements GenreService {
     public void update(long id, String genreName) throws ValidateException, NotFoundException {
         if(id == 0) throw new ValidateException("Wrong parameter genreId");
         if(genreName == null || genreName.isEmpty()) throw new ValidateException("Wrong parameter genreName");
-        Genre genre = this.genreRepositoryJPA.findById(id).get();
-        if(genre == null) throw new NotFoundException("Genre with id: " + id + "not found");
+        Genre genre = this.genreRepositoryJPA.findById(id)
+                .orElseThrow(() -> {throw new NotFoundException("Genre with id: " + id + "not found");});
         genre.setName(genreName);
         this.genreRepositoryJPA.save(genre);
     }
@@ -78,11 +78,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void delete(long id) throws ValidateException, NotFoundException {
         if(id == 0) throw new ValidateException("Wrong parameter genreId");
-        Genre genre = this.genreRepositoryJPA.findById(id).get();
-        if(genre != null) {
-            this.genreRepositoryJPA.delete(genre);
-        } else {
-            throw new NotFoundException("Genre with id " + id + "not found");
-        }
+        this.genreRepositoryJPA.findById(id)
+                .ifPresentOrElse(genre -> { genreRepositoryJPA.delete(genre); }, () -> {throw new NotFoundException("Genre with id " + id + "not found");});
     }
 }

@@ -35,8 +35,8 @@ public class BookServiceImpl implements BookService {
         if(!this.isCorrectValue(book.getName())) throw new ValidateException("Please enter a book name");
         if(book.getGenre() == null) throw new ValidateException("Please select a genre");
         if(book.getGenre().getId() == 0) throw new ValidateException("Please select a genre");
-        Genre genre = this.genreRepositoryJPA.findById(book.getGenre().getId()).get();
-        if(genre == null) throw new NotFoundException("Genre with id: " + book.getId() + "not found");
+        Genre genre = this.genreRepositoryJPA.findById(book.getGenre().getId())
+                .orElseThrow(() -> {throw new NotFoundException("Genre with id: " + book.getGenre().getId() + "not found");});
         book.setGenre(genre);
         return this.bookRepository.save(book);
     }
@@ -65,11 +65,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book findById(long id) throws ValidateException, NotFoundException {
         if(id == 0) throw new ValidateException("Wrong parameter id");
-        if(this.bookRepository.existsById(id)) {
-            return this.bookRepository.findById(id).get();
-        } else {
-            throw new NotFoundException(String.format("%s%d%s", "Book with id: ", id, "does not exists"));
-        }
+            return this.bookRepository.findById(id)
+                    .orElseThrow(() -> {throw new NotFoundException(String.format("%s%d%s", "Book with id: ", id, "does not exists"));});
     }
 
     @Transactional(readOnly = true)
@@ -83,10 +80,10 @@ public class BookServiceImpl implements BookService {
     public void addAuthorToBook(long authorId, long bookId) throws ValidateException, NotFoundException {
         if(authorId == 0) throw new ValidateException("Wrong author id");
         if(bookId == 0) throw new ValidateException("Wrong book id");
-        Book book = this.bookRepository.findById(bookId).get();
-        if(book == null) throw new NotFoundException("Book with id: " + bookId + "not found");
-        Author author = this.authorRepositoryJPA.findById(authorId).get();
-        if(author == null) throw new NotFoundException("Author with id: " + authorId + "not found");
+        Book book = this.bookRepository.findById(bookId)
+                .orElseThrow(() -> {throw new NotFoundException("Book with id: " + bookId + "not found");});
+        Author author = this.authorRepositoryJPA.findById(authorId)
+                .orElseThrow(() -> {throw new NotFoundException("Author with id: " + authorId + "not found");});
         if(book.getAuthors() == null || book.getAuthors().isEmpty()) {
             Set<Author> authorSet = new HashSet<>();
             authorSet.add(author);
@@ -101,8 +98,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public void delete(long bookId) throws ValidateException, NotFoundException {
         if(bookId == 0) throw new ValidateException("Wrong book id");
-        Book book = this.bookRepository.findById(bookId).get();
-        if(book == null) throw new NotFoundException("Book with id: " + bookId + "not found");
+        Book book = this.bookRepository.findById(bookId)
+                .orElseThrow(() -> {throw new NotFoundException("Book with id: " + bookId + "not found");});
         this.bookRepository.delete(book);
     }
 
