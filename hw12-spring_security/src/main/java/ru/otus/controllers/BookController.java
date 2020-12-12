@@ -1,19 +1,20 @@
-rootProject.name = 'otus-springpublic interface BookController {
+package ru.otus.controllers;
+
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.view.RedirectView;
+import ru.otus.entities.Book;
+import ru.otus.exceptions.NotFoundException;
+import ru.otus.exceptions.ValidateException;
+
+/*
+ * @created 12/12 - otus-spring
+ * @author Ilya Rogatkin
+ */
+public interface BookController {
     public String viewBooks(Model model);
     public String addBookPage(Model model);
     public RedirectView addBook(Book book) throws ValidateException;
     public String editBookPage(long id, Model model) throws ValidateException, NotFoundException;
     public RedirectView editBook(Book book) throws ValidateException, NotFoundException;
     public RedirectView deleteBook(Book book) throws ValidateException, NotFoundException;
-}'
-include 'hw01-beginning'
-include 'hw02-annotation_config'
-include 'hw03-spring-boot'
-include 'hw04-spring_shell'
-include 'hw05-spring_jdbc'
-include 'hw06-spring_ORM_JPA'
-include 'hw07-spring_data_jpa'
-include 'hw09-spring_mvc'
-include 'hw10-spring_mvc_ajax'
-include 'hw12-spring_security'
-
+}
