@@ -27,27 +27,27 @@ public class BookControllerImpl implements BookController {
     private final BookService bookService;
     private final GenreService genreService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
     public String viewBooks(Model model) {
         List<Book> books = this.bookService.findAll();
         model.addAttribute("books", books);
         return "list";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/page/add", method = RequestMethod.GET)
     public String addBookPage(Model model) {
         List<Genre> genres = this.genreService.findAll();
         model.addAttribute("genres", genres);
         return "add";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/book/add", method = RequestMethod.POST)
     public RedirectView addBook(Book book) throws ValidateException {
         this.bookService.addBook(book);
         return new RedirectView("/");
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/page/edit", method = RequestMethod.GET)
     public String editBookPage(@RequestParam(value = "id") long id, Model model) throws ValidateException, NotFoundException {
         Book book = this.bookService.findById(id);
         List<Genre> genres = this.genreService.findAll();
@@ -56,13 +56,13 @@ public class BookControllerImpl implements BookController {
         return "edit";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/book/edit", method = RequestMethod.POST)
     public RedirectView editBook(Book book) throws ValidateException, NotFoundException {
         this.bookService.update(book);
         return new RedirectView("/");
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/book/delete", method = RequestMethod.GET)
     public RedirectView deleteBook(Book book) throws ValidateException, NotFoundException {
         this.bookService.delete(book.getId());
         return new RedirectView("/");
