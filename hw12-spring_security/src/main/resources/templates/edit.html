@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <form id="edit-form" th:action="@{/edit(id=${book.id})}" th:method="post" action="edit.html" th:object="${book}">
+    <form id="edit-form" th:action="@{/book/edit(id=${book.id})}" th:method="post" action="edit.html" th:object="${book}">
         <div class="form-group">
             <label for="id-input">Book id</label>
             <input type="number" class="form-control" id="id-input" readonly="readonly" th:value="*{id}" name="id" value="1">

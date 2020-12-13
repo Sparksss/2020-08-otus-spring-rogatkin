@@ -8,7 +8,7 @@
 <body>
 <div class="container">
     <h1>Books <span class="badge badge-secondary">Store</span></h1>
-    <a class="btn btn-primary" th:href="@{/add}" href="add.html">Add new book</a>
+    <a class="btn btn-primary" th:href="@{/book/page/add}" href="add.html">Add new book</a>
     <table class="table">
         <thead>
         <tr>
@@ -28,10 +28,10 @@
                 <div th:text="*{'Genre name: ' + name}"></div>
             </td>
             <td>
-                <a th:href="@{/edit(id=${book.id})}" href="edit.html">Edit</a>
+                <a th:href="@{/book/page/edit(id=${book.id})}" href="edit.html">Edit</a>
             </td>
             <td>
-                <a th:href="@{/delete(id=${book.id})}" href="delete.html">Delete</a>
+                <a th:href="@{/book/delete(id=${book.id})}" href="delete.html">Delete</a>
             </td>
         </tr>
         </tbody>
