@@ -1,3 +1,11 @@
+CREATE TABLE users (
+    id bigserial primary key ,
+    username VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
+
+
 CREATE TABLE genres (
     id bigserial primary key,
     name varchar(200)
