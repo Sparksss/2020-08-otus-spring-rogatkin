@@ -35,8 +35,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
-//                .authorizeRequests().antMatchers("/").anonymous()
-//                .and()
                 .authorizeRequests().antMatchers("/book", "/book/page/add", "/book/add", "/book/page/edit", "/book/edit", "/book/delete").authenticated()
                 .and()
                 .formLogin();
