@@ -8,3 +8,5 @@ include 'hw06-spring_ORM_JPA'
 include 'hw07-spring_data_jpa'
 include 'hw09-spring_mvc'
 include 'hw10-spring_mvc_ajax'
+include 'hw12-spring_security'
+
